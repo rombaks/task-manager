@@ -1,10 +1,10 @@
 from .user import User
 from .task import Task
-from .tags import Tag
+from .tag import Tag
 
 
 __all__ = [
     "User",
-    "Task", 
+    "Task",
     "Tag",
 ]
