@@ -5,12 +5,16 @@ from .user import User
 
 class Task(models.Model):
     title = models.CharField(max_length=255, verbose_name="Task")
-    description = models.TextField(blank=True, verbose_name='Description')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created at')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated at')
+    description = models.TextField(blank=True, verbose_name="Description")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated at")
     due_at = models.DateTimeField(blank=True, null=True, verbose_name="Due date")
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
-    executor = models.ForeignKey(User, on_delete=models.PROTECT)
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="task_author"
+    )
+    executor = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="task_executor"
+    )
 
     class State(models.TextChoices):
         NEW_TASK = "new_task"
@@ -21,8 +25,12 @@ class Task(models.Model):
         RELEASED = "released"
         ARCHIVED = "archived"
 
-    state = models.CharField(max_length=255, verbose_name="State",
-            default=State.NEW_TASK, choices=State.choices)
+    state = models.CharField(
+        max_length=255,
+        verbose_name="State",
+        default=State.NEW_TASK,
+        choices=State.choices,
+    )
 
     class Priority(models.TextChoices):
         HIGH = "3"
@@ -30,8 +38,12 @@ class Task(models.Model):
         LOW = "1"
         NO_PRIORITY = "0"
 
-    priority = models.CharField(max_length=255, verbose_name="Priority", 
-            default=Priority.NO_PRIORITY, choices=Priority.choices)
+    priority = models.CharField(
+        max_length=255,
+        verbose_name="Priority",
+        default=Priority.NO_PRIORITY,
+        choices=Priority.choices,
+    )
 
     def __str__(self) -> str:
         return self.title
@@ -39,4 +51,4 @@ class Task(models.Model):
     class Meta:
         verbose_name = "Task"
         verbose_name_plural = "Tasks"
-        ordering = ['-priority']
+        ordering = ["-priority"]
