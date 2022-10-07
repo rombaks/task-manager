@@ -1,6 +1,7 @@
 from django.db import models
 
 from .user import User
+from .tag import Tag
 
 
 class Task(models.Model):
@@ -12,12 +13,13 @@ class Task(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="task_author"
     )
-    executor = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="task_executor"
+    assignee = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="task_assignee"
     )
 
+
     class State(models.TextChoices):
-        NEW_TASK = "new_task"
+        NEW = "new"
         IN_DEVELOPMENT = "in_development"
         IN_QA = "in_qa"
         IN_CODE_REVIEW = "in_code_review"
@@ -28,7 +30,7 @@ class Task(models.Model):
     state = models.CharField(
         max_length=255,
         verbose_name="State",
-        default=State.NEW_TASK,
+        default=State.NEW,
         choices=State.choices,
     )
 
