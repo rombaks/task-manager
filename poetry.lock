@@ -68,6 +68,18 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "djangorestframework"
+version = "3.14.0"
+description = "Web APIs for Django, made easy."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+django = ">=3.0"
+pytz = "*"
+
+[[package]]
 name = "mypy-extensions"
 version = "0.4.3"
 description = "Experimental type system extensions for programs checked with the mypy typechecker."
@@ -104,6 +116,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "pytz"
+version = "2022.4"
+description = "World timezone definitions, modern and historical"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "sqlparse"
 version = "0.4.3"
 description = "A non-validating SQL parser."
@@ -138,7 +158,7 @@ python-versions = ">=2"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ab0efdf52d47e18ac6f46c70d4d7383fa8508fa6b08c4f1e4e7acde3da3fa9d7"
+content-hash = "670f4c79bf80bb23bfee0f1d0e56a8799584c2c803f75c46032649193ae93cfe"
 
 [metadata.files]
 asgiref = []
@@ -146,10 +166,12 @@ black = []
 click = []
 colorama = []
 django = []
+djangorestframework = []
 mypy-extensions = []
 pathspec = []
 platformdirs = []
 psycopg2-binary = []
+pytz = []
 sqlparse = []
 tomli = []
 typing-extensions = []
