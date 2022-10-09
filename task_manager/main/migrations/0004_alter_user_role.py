@@ -6,13 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0003_remove_task_executor_task_assignee'),
+        ("main", "0003_remove_task_executor_task_assignee"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='role',
-            field=models.CharField(choices=[('Developer', 'Developer'), ('Manager', 'Manager'), ('Admin', 'Admin')], default='Developer', max_length=255, verbose_name='Role'),
+            model_name="user",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("Developer", "Developer"),
+                    ("Manager", "Manager"),
+                    ("Admin", "Admin"),
+                ],
+                default="Developer",
+                max_length=255,
+                verbose_name="Role",
+            ),
         ),
     ]
