@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0006_alter_user_managers'),
+        ("main", "0006_alter_user_managers"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='task',
-            name='updated_to',
-            field=models.DateTimeField(auto_now=True, verbose_name='Updated at'),
+            model_name="task",
+            name="updated_to",
+            field=models.DateTimeField(auto_now=True, verbose_name="Updated at"),
         ),
     ]

@@ -6,21 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0004_alter_user_role'),
+        ("main", "0004_alter_user_role"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='user',
-            options={'verbose_name': 'User', 'verbose_name_plural': 'Users'},
+            name="user",
+            options={"verbose_name": "User", "verbose_name_plural": "Users"},
         ),
         migrations.RemoveField(
-            model_name='user',
-            name='username',
+            model_name="user",
+            name="username",
         ),
         migrations.AlterField(
-            model_name='user',
-            name='email',
-            field=models.EmailField(max_length=254, unique=True, verbose_name='E-mail'),
+            model_name="user",
+            name="email",
+            field=models.EmailField(max_length=254, unique=True, verbose_name="E-mail"),
         ),
     ]

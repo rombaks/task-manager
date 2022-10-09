@@ -6,13 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0005_alter_user_options_remove_user_username_and_more'),
+        ("main", "0005_alter_user_options_remove_user_username_and_more"),
     ]
 
     operations = [
         migrations.AlterModelManagers(
-            name='user',
-            managers=[
-            ],
+            name="user",
+            managers=[],
         ),
     ]

@@ -8,18 +8,23 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0002_alter_task_state'),
+        ("main", "0002_alter_task_state"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='task',
-            name='executor',
+            model_name="task",
+            name="executor",
         ),
         migrations.AddField(
-            model_name='task',
-            name='assignee',
-            field=models.ForeignKey(default=12, on_delete=django.db.models.deletion.PROTECT, related_name='task_assignee', to=settings.AUTH_USER_MODEL),
+            model_name="task",
+            name="assignee",
+            field=models.ForeignKey(
+                default=12,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="task_assignee",
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
     ]

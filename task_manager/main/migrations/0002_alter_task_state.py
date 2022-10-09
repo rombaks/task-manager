@@ -6,13 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0001_initial'),
+        ("main", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='task',
-            name='state',
-            field=models.CharField(choices=[('new', 'New'), ('in_development', 'In Development'), ('in_qa', 'In Qa'), ('in_code_review', 'In Code Review'), ('ready_for_release', 'Ready For Release'), ('released', 'Released'), ('archived', 'Archived')], default='new', max_length=255, verbose_name='State'),
+            model_name="task",
+            name="state",
+            field=models.CharField(
+                choices=[
+                    ("new", "New"),
+                    ("in_development", "In Development"),
+                    ("in_qa", "In Qa"),
+                    ("in_code_review", "In Code Review"),
+                    ("ready_for_release", "Ready For Release"),
+                    ("released", "Released"),
+                    ("archived", "Archived"),
+                ],
+                default="new",
+                max_length=255,
+                verbose_name="State",
+            ),
         ),
     ]
