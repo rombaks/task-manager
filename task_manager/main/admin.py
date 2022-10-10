@@ -6,22 +6,41 @@ from .models import User, Tag, Task
 class CustomUserAdmin(UserAdmin):
     model = User
     add_fieldsets = (
-        (None, {'fields': (
-            'email', 'password1', 'password2',
-            'first_name', 'last_name',
-            'role', )}),
+        (
+            None,
+            {
+                "fields": (
+                    "username",
+                    "email",
+                    "password1",
+                    "password2",
+                    "first_name",
+                    "last_name",
+                    "role",
+                )
+            },
+        ),
     )
     fieldsets = (
-        (None, {
-            "fields": (
-                ('email', 'first_name', 'last_name', 'is_staff', )
-            ),
-        }),
+        (
+            None,
+            {
+                "fields": (
+                    (
+                        "username",
+                        "email",
+                        "first_name",
+                        "last_name",
+                        "is_staff",
+                    )
+                ),
+            },
+        ),
     )
 
-    list_display = ('first_name', 'last_name', 'email', 'role')
-    list_filter = ('role',)
-    ordering = ('email',)
+    list_display = ("first_name", "last_name", "email", "role")
+    list_filter = ("role",)
+    ordering = ("email",)
 
 
 class TaskAdmin(admin.ModelAdmin):
@@ -31,15 +50,13 @@ class TaskAdmin(admin.ModelAdmin):
         "author",
         "assignee",
         "due_at",
-        "created_at",
-        "updated_at",
         "state",
         "priority",
     )
-    list_display_links = ("title", )
-    search_fields = ("title", )
+    list_display_links = ("title",)
+    search_fields = ("title",)
 
-    list_editable = ("state", )
+    list_editable = ("state",)
     list_filter = ("state", "priority")
 
 

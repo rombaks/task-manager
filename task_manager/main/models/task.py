@@ -11,12 +11,12 @@ class Task(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated at")
     due_at = models.DateTimeField(blank=True, null=True, verbose_name="Due date")
     author = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="task_author"
+        User, on_delete=models.PROTECT, null=True, related_name="Task_author"
     )
     assignee = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="task_assignee"
+        User, on_delete=models.PROTECT, null=True, related_name="Task_assignee"
     )
-
+    tag = models.ManyToManyField(Tag, related_name="Tag", verbose_name="Tag", default=[0])
 
     class State(models.TextChoices):
         NEW = "new"
