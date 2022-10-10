@@ -7,7 +7,6 @@ class User(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
 
-
     class Roles(models.TextChoices):
         DEVELOPER = "Developer"
         MANAGER = "Manager"
@@ -21,7 +20,7 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return f'{self.first_name[:1]}.{self.last_name} [{self.role[:1]}][id{self.id}]'
+        return f"{self.first_name[:1]}.{self.last_name} [{self.role[:1]}][id{self.id}]"
 
     class Meta:
         verbose_name = "User"

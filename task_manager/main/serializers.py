@@ -5,8 +5,15 @@ from .models import tags, user, task
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = user.User
-        fields = ('id', 'username', 'first_name', 'last_name',
-            'email', 'date_of_birth', 'phone')
+        fields = (
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "date_of_birth",
+            "phone",
+        )
 
 
 class TagSerializer(serializers.ModelSerializer):
