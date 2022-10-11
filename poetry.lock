@@ -310,7 +310,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "536a0667e1d0b37c634050569f25f7d025977bf027ca6f5e892d54d4067e052f"
+content-hash = "d2939ba1d797302a984bb830de97f4814b1a24e55a2bf85c4ccfcb335827f2d9"
 
 [metadata.files]
 asgiref = []
@@ -324,6 +324,8 @@ djangorestframework = []
 importlib-metadata = []
 iniconfig = []
 markdown = []
+djangorestframework = []
+iniconfig = []
 mypy-extensions = []
 packaging = []
 pathspec = []
