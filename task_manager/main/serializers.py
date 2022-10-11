@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import tags, user, task
+from .models import tag, user, task
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -18,12 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = tags.Tag
+        model = tag.Tag
         fields = ("title",)
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, required=False)
+    tag = TagSerializer(many=True, required=False)
 
     class Meta:
         model = task.Task
