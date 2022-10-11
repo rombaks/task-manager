@@ -5,7 +5,7 @@ from django.db import models
 from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
 
-from  task_manager.main.models import Tag, Task, User
+from task_manager.main.models import Tag, Task, User
 
 
 class TestAdmin(APITestCase):
