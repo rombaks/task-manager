@@ -19,9 +19,24 @@ class UserViewSet(viewsets.ModelViewSet):
     filterset_class = UserFilter
 
 
+class TaskFilter(django_filters.FilterSet):
+
+    tag__title = django_filters.CharFilter(lookup_expr="iexact")
+
+    class Meta:
+        model = Task
+        fields = (
+            "state",
+            "tag__title",
+            "author__username",
+            "assignee__username",
+        )
+
+
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.select_related("author", "assignee").order_by("priority")
     serializer_class = TaskSerializer
+    filter_class = TaskFilter
 
 
 class TagViewSet(viewsets.ModelViewSet):
