@@ -12,6 +12,7 @@ black = "^22.8.0"
 djangorestframework = "^3.14.0"
 django-filter = "^22.1"
 Markdown = "^3.4.1"
+drf-yasg = "^1.21.4"
 
 [tool.poetry.dev-dependencies]
 pytest-django = "^4.5.2"
