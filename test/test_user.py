@@ -56,6 +56,12 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
+    def update(self, data: dict, args: List[Union[str, int]] = None) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.put(self.list_url(args), data=data)
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.data
+
 
 class TestUserViewSet(TestViewSetBase):
     basename = "users"
@@ -71,6 +77,11 @@ class TestUserViewSet(TestViewSetBase):
         assert user == expected_response
 
     def test_retrieve(self):
+        user = self.create(self.user_attributes)
+        expected_response = self.expected_details(user, self.user_attributes)
+        assert user == expected_response
+
+    def test_update(self):
         user = self.create(self.user_attributes)
         expected_response = self.expected_details(user, self.user_attributes)
         assert user == expected_response
