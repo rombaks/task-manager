@@ -20,15 +20,11 @@ class Task(models.Model):
     )
 
     assignee = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        related_name="task_assignee",
-        blank=True,
-        null=True,
-        verbose_name="assignee",
+        User, on_delete=models.PROTECT, null=True, related_name="Task_assignee"
     )
-
-    tags = models.ManyToManyField(Tag, related_name="Tag", verbose_name="Tag")
+    tag = models.ManyToManyField(
+        Tag, related_name="Tag", verbose_name="Tag", default=[0]
+    )
 
     class State(models.TextChoices):
         NEW = "new"

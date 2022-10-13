@@ -13,6 +13,15 @@ class TestAdmin(APITestCase):
     admin: User
 
     @classmethod
+    def setUpTestData(cls) -> None:
+        super().setUpTestData()
+        cls.admin = User.objects.create_superuser(
+            "test@test.ru", email=None, password=None
+        )
+        cls.client = APIClient()
+        cls.client.force_login(cls.admin)
+
+    @classmethod
     def assert_forms(
         cls, model: Type[models.Model], key: int, check_actions: Container = ()
     ) -> None:
@@ -28,23 +37,17 @@ class TestAdmin(APITestCase):
             response = cls.client.get(url)
             assert response.status_code == HTTPStatus.OK, response.content
 
-    @classmethod
-    def setUpTestData(cls) -> None:
-        super().setUpTestData()
-        cls.admin = User.objects.create_superuser(email='test@test.com', password='aKAd7nN12')
-        cls.client = APIClient()
-        cls.client.force_login(cls.admin)
-
-    def test_user(self):
+    def test_user(self) -> None:
         self.assert_forms(User, self.admin.id)
+        self.client.force_login(self.admin)
 
         response = self.client.get(reverse("admin:main_user_changelist"))
         assert response.status_code == HTTPStatus.OK, response.content
-
         response = self.client.get(reverse("admin:main_user_add"))
         assert response.status_code == HTTPStatus.OK, response.content
-
-        response = self.client.get(reverse("admin:main_user_change", args=[self.admin.id]))
+        response = self.client.get(
+            reverse("admin:main_user_change", args=[self.admin.id])
+        )
         assert response.status_code == HTTPStatus.OK, response.content
 
     def test_tag(self) -> None:

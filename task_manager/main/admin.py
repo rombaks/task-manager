@@ -10,6 +10,7 @@ class CustomUserAdmin(UserAdmin):
             None,
             {
                 "fields": (
+                    "username",
                     "email",
                     "password1",
                     "password2",
@@ -26,6 +27,7 @@ class CustomUserAdmin(UserAdmin):
             {
                 "fields": (
                     (
+                        "username",
                         "email",
                         "first_name",
                         "last_name",
@@ -48,8 +50,6 @@ class TaskAdmin(admin.ModelAdmin):
         "author",
         "assignee",
         "due_at",
-        "created_at",
-        "updated_at",
         "state",
         "priority",
     )
