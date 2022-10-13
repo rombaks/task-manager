@@ -34,7 +34,6 @@ class TestViewSetBase(APITestCase):
     @staticmethod
     def create_api_user():
         user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
-        print(user_attributes)
         return User.objects.create(**user_attributes)
 
     @classmethod
