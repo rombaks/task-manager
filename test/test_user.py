@@ -16,7 +16,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     email = factory.Faker("email")
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
-    date_of_birth = '1962-09-23'
+    date_of_birth = "1962-09-23"
     phone = factory.Faker("phone_number")
 
 
@@ -50,6 +50,12 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.CREATED, response.content
         return response.data
 
+    def retrieve(self, data: dict, args: List[Union[str, int]] = None) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.get(self.list_url(args), data=data)
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.data
+
 
 class TestUserViewSet(TestViewSetBase):
     basename = "users"
@@ -60,6 +66,11 @@ class TestUserViewSet(TestViewSetBase):
         return {**attributes, "id": entity["id"]}
 
     def test_create(self):
+        user = self.create(self.user_attributes)
+        expected_response = self.expected_details(user, self.user_attributes)
+        assert user == expected_response
+
+    def test_retrieve(self):
         user = self.create(self.user_attributes)
         expected_response = self.expected_details(user, self.user_attributes)
         assert user == expected_response
