@@ -56,6 +56,18 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
+    def update(self, data: dict, id: int = None) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.patch(self.detail_url(id), data=data)
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.data
+
+    # def delete(self, data: dict, args: List[Union[str, int]] = None) -> dict:
+    #     self.client.force_login(self.user)
+    #     response = self.client.delete(self.list_url(args), data=data)
+    #     assert response.status_code == HTTPStatus.NO_CONTENT
+    #     return response.data
+
 
 class TestUserViewSet(TestViewSetBase):
     basename = "users"
@@ -72,6 +84,19 @@ class TestUserViewSet(TestViewSetBase):
 
     def test_retrieve(self):
         user = self.create(self.user_attributes)
-        id =  self.expected_details(user, self.user_attributes)["id"]
+        id = self.expected_details(user, self.user_attributes)["id"]
         expected_response = self.retrieve(id=id)
         assert user == expected_response
+
+    def test_update(self):
+        user = self.create(self.user_attributes)
+        id = self.expected_details(user, self.user_attributes)["id"]
+        new_data = {'last_name': 'Smith'}
+        expected_response = self.update(data=new_data, id=id)
+        updated_user = self.retrieve(id=id)
+        assert updated_user == expected_response
+
+    # def test_delete(self):
+    #     user = self.create(self.user_attributes)
+    #     expected_response = self.expected_details(user, self.user_attributes)
+    #     assert user == expected_response
