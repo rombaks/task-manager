@@ -66,7 +66,7 @@ class TestViewSetBase(APITestCase):
         self.client.force_login(self.user)
         response = self.client.delete(self.detail_url(id))
         assert response.status_code == HTTPStatus.NO_CONTENT
-        return response.status_code
+        return response
 
 
 class TestUserViewSet(TestViewSetBase):
@@ -100,4 +100,4 @@ class TestUserViewSet(TestViewSetBase):
         user = self.create(self.user_attributes)
         id = self.expected_details(user, self.user_attributes)["id"]
         expected_response = self.delete(id=id)
-        assert HTTPStatus.NO_CONTENT == expected_response
+        assert expected_response.status_code == HTTPStatus.NO_CONTENT
