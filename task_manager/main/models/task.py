@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from .user import User
 from .tag import Tag
@@ -7,8 +8,8 @@ from .tag import Tag
 class Task(models.Model):
     title = models.CharField(max_length=255, verbose_name="Task")
     description = models.TextField(blank=True, verbose_name="Description")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated at")
+    created_at = models.DateTimeField(default=timezone.now, verbose_name="Created at")
+    updated_at = models.DateTimeField(default=timezone.now, verbose_name="Updated at")
     due_at = models.DateTimeField(blank=True, null=True, verbose_name="Due date")
     author = models.ForeignKey(
         User,
