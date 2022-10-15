@@ -6,8 +6,8 @@ from typing import List, Union
 from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
 
-from task_manager.main.models import User, Task
-from factories import UserFactory, TaskFactory
+from task_manager.main.models import User
+from factories import UserFactory
 
 
 class TestViewSetBase(APITestCase):
