@@ -19,12 +19,22 @@ class UserFactory(factory.django.DjangoModelFactory):
     phone = factory.LazyAttribute(lambda _: faker.unique.phone_number())
 
 
+class TagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Tag
+
+    title = factory.LazyAttribute(lambda _: faker.unique.word())
+
+
 class TaskFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Task
 
     title = factory.LazyAttribute(lambda _: faker.unique.word())
     description = factory.LazyAttribute(lambda _: faker.text(max_nb_chars=50))
+
+    author = None
+    assignee = None
 
     created_at = factory.LazyAttribute(
         lambda _: faker.past_datetime().strftime("%Y-%m-%dT%XZ")
@@ -60,10 +70,3 @@ class TaskFactory(factory.django.DjangoModelFactory):
         )
     )
     tag = []
-
-
-class TagFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = Tag
-
-    title = factory.LazyAttribute(lambda _: faker.unique.word())
