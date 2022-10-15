@@ -14,6 +14,4 @@ class UserFilter(django_filters.FilterSet):
 class TaskFilter(django_filters.FilterSet):
     class Meta:
         model = Task
-        fields = {
-            "tag__title": ["iexact"]
-        }
+        fields = {"tag__title": ["iexact"]}
