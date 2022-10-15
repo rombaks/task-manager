@@ -13,31 +13,7 @@ class TestTaskViewSet(TestViewSetBase):
     def expected_details(entity: dict, attributes: dict):
         return {**attributes, "id": entity["id"]}
 
-    # def test_create(self):
-    #     task = self.create(self.task_attributes)
-    #     expected_response = self.expected_details(task, self.task_attributes)
-    #     assert task == expected_response
-
-    # def test_retrieve(self):
-    #     task = self.create(self.task_attributes)
-    #     id = self.expected_details(task, self.task_attributes)["id"]
-    #     expected_response = self.retrieve(id=id)
-    #     assert task == expected_response
-
-    # def test_update(self):
-    #     task = self.create(self.task_attributes)
-    #     id = self.expected_details(task, self.task_attributes)["id"]
-    #     new_data = {"title": "Super new"}
-    #     expected_response = self.update(data=new_data, id=id)
-    #     updated_task = self.retrieve(id=id)
-    #     assert updated_task == expected_response
-
-    # def test_delete(self):
-    #     task = self.create(self.task_attributes)
-    #     id = self.expected_details(task, self.task_attributes)["id"]
-    #     expected_response = self.delete(id=id)
-    #     assert expected_response.status_code == HTTPStatus.NO_CONTENT
-
-    # def test_not_found(self):
-    #     expected_response = self.client.get("/not_found")
-    #     assert expected_response.status_code == HTTPStatus.NOT_FOUND
+    def test_create(self):
+        task = self.create(self.task_attributes)
+        expected_response = self.expected_details(task, self.task_attributes)
+        assert task == expected_response
