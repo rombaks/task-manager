@@ -9,6 +9,11 @@ class TestUserViewSet(TestViewSetBase):
     basename = "users"
     user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
 
+    BATCH_SIZE = 5
+    users_attribures = factory.build_batch(
+        dict, FACTORY_CLASS=UserFactory, size=BATCH_SIZE
+    )
+
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
         return {**attributes, "id": entity["id"]}
