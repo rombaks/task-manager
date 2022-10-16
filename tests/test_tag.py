@@ -23,3 +23,11 @@ class TestTagViewSet(TestViewSetBase):
         id = self.expected_details(tag, self.tag_attributes)["id"]
         expected_response = self.retrieve(id=id)
         assert tag == expected_response
+
+    def test_update(self):
+        tag = self.create(self.tag_attributes)
+        id = self.expected_details(tag, self.tag_attributes)["id"]
+        new_data = {"title": "backup"}
+        expected_response = self.update(data=new_data, id=id)
+        updated_tag = self.retrieve(id=id)
+        assert updated_tag == expected_response
