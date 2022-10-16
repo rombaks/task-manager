@@ -41,7 +41,3 @@ class TestTagViewSet(TestViewSetBase):
     def test_not_found(self):
         expected_response = self.client.get("/not_found")
         assert expected_response.status_code == HTTPStatus.NOT_FOUND
-
-    def test_anonymous_create(self):
-        expected_response = self.anonymous_create(self.tag_attributes)
-        assert expected_response.status_code == HTTPStatus.FORBIDDEN
