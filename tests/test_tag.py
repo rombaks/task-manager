@@ -37,3 +37,7 @@ class TestTagViewSet(TestViewSetBase):
         id = self.expected_details(tag, self.tag_attributes)["id"]
         expected_response = self.delete(id=id)
         assert expected_response.status_code == HTTPStatus.NO_CONTENT
+
+    def test_not_found(self):
+        expected_response = self.client.get("/not_found")
+        assert expected_response.status_code == HTTPStatus.NOT_FOUND
