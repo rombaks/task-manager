@@ -17,3 +17,10 @@ class TestTaskViewSet(TestViewSetBase):
         task = self.create(self.task_attributes)
         expected_response = self.expected_details(task, self.task_attributes)
         assert task == expected_response
+
+    def test_retrieve(self):
+        task = self.create(self.task_attributes)
+        id = self.expected_details(task, self.task_attributes)["id"]
+        expected_response = self.retrieve(id=id)
+        assert task == expected_response
+
