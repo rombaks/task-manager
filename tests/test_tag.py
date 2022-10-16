@@ -17,3 +17,9 @@ class TestTagViewSet(TestViewSetBase):
         tag = self.create(self.tag_attributes)
         expected_response = self.expected_details(tag, self.tag_attributes)
         assert tag == expected_response
+
+    def test_retrieve(self):
+        tag = self.create(self.tag_attributes)
+        id = self.expected_details(tag, self.tag_attributes)["id"]
+        expected_response = self.retrieve(id=id)
+        assert tag == expected_response
