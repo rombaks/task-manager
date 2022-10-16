@@ -109,6 +109,17 @@ python-versions = "*"
 jinja2 = "*"
 
 [[package]]
+name = "coverage"
+version = "6.5.0"
+description = "Code coverage measurement for Python"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+toml = ["tomli"]
+
+[[package]]
 name = "django"
 version = "4.1.1"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -216,6 +227,17 @@ python-versions = ">=3.7"
 
 [package.dependencies]
 python-dateutil = ">=2.4"
+
+[[package]]
+name = "freezegun"
+version = "1.2.2"
+description = "Let your Python tests travel through time"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+python-dateutil = ">=2.7"
 
 [[package]]
 name = "idna"
@@ -564,7 +586,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d90f0130065359b8757ae13887b1812f9bd22e55b6060b1c6c532af13993e71e"
+content-hash = "e9d847366026ce7c2e7ecec1f498dc85b8b042997d866d91488e60870e2edfe3"
 
 [metadata.files]
 asgiref = []
@@ -576,6 +598,7 @@ click = []
 colorama = []
 coreapi = []
 coreschema = []
+coverage = []
 django = []
 django-filter = []
 djangorestframework = []
@@ -583,6 +606,7 @@ djangorestframework-simplejwt = []
 drf-yasg = []
 factory-boy = []
 faker = []
+freezegun = []
 idna = []
 importlib-metadata = []
 inflection = []
