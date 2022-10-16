@@ -48,5 +48,5 @@ class TestUserViewSet(TestViewSetBase):
         assert expected_response.status_code == HTTPStatus.NOT_FOUND
 
     def test_anonymous_create(self):
-        response = self.anonymous_create(self.user_attributes)
-        assert response.status_code == HTTPStatus.FORBIDDEN
+        expected_response = self.anonymous_create(self.user_attributes)
+        assert expected_response.status_code == HTTPStatus.FORBIDDEN
