@@ -31,3 +31,9 @@ class TestTaskViewSet(TestViewSetBase):
         expected_response = self.update(data=new_data, id=id)
         updated_task = self.retrieve(id=id)
         assert updated_task == expected_response
+
+    def test_delete(self):
+        task = self.create(self.task_attributes)
+        id = self.expected_details(task, self.task_attributes)["id"]
+        expected_response = self.delete(id=id)
+        assert expected_response.status_code == HTTPStatus.NO_CONTENT
