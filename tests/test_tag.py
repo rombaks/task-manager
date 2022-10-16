@@ -31,3 +31,9 @@ class TestTagViewSet(TestViewSetBase):
         expected_response = self.update(data=new_data, id=id)
         updated_tag = self.retrieve(id=id)
         assert updated_tag == expected_response
+
+    def test_delete(self):
+        tag = self.create(self.tag_attributes)
+        id = self.expected_details(tag, self.tag_attributes)["id"]
+        expected_response = self.delete(id=id)
+        assert expected_response.status_code == HTTPStatus.NO_CONTENT
