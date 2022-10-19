@@ -44,14 +44,6 @@ class TestUserViewSet(TestViewSetBase):
         user_list = self.list()
         assert user_list == expected_response
 
-    # def test_update(self):
-    #     user = self.create(self.user_attributes)
-    #     id = self.expected_details(user, self.user_attributes)["id"]
-    #     new_data = {"last_name": "Smith"}
-    #     expected_response = self.update(data=new_data, id=id)
-    #     updated_user = self.retrieve(id=id)
-    #     assert updated_user == expected_response
-
     def test_update(self):
         user = self.create(self.user_attributes)
         new_data = {"last_name": "Smith"}
@@ -69,5 +61,6 @@ class TestUserViewSet(TestViewSetBase):
         assert expected_response.status_code == HTTPStatus.NOT_FOUND
 
     def test_anonymous_create(self):
-        expected_response = self.anonymous_create(self.user_attributes)
-        assert expected_response.status_code == HTTPStatus.FORBIDDEN
+        response = self.anonymous_create(self.user_attributes)
+        expected_error = "Authentication credentials were not provided."
+        assert response["detail"] == expected_error

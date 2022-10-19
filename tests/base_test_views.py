@@ -72,4 +72,4 @@ class TestViewSetBase(APITestCase):
         self.client.logout()
         response = self.client.post(self.list_url(args), data=data)
         assert response.status_code == HTTPStatus.FORBIDDEN
-        return response
+        return response.data
