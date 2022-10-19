@@ -44,10 +44,9 @@ class TestTaskViewSet(TestViewSetBase):
 
     def test_update(self):
         task = self.create(self.task_attributes)
-        id = self.expected_details(task, self.task_attributes)["id"]
         new_data = {"title": "Build API 0.1.3"}
-        expected_response = self.update(data=new_data, id=id)
-        updated_task = self.retrieve(id=id)
+        expected_response = self.update(new_data, task["id"])
+        updated_task = self.retrieve(task["id"])
         assert updated_task == expected_response
 
     def test_delete(self):
