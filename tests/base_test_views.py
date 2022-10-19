@@ -50,6 +50,12 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
+    def retrieve_list(self) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.get(self.list_url())
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.data
+
     def update(self, data: dict, id: int = None) -> dict:
         self.client.force_login(self.user)
         response = self.client.patch(self.detail_url(id), data=data)
