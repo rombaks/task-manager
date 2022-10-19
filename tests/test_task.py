@@ -1,5 +1,6 @@
 import factory
 from http import HTTPStatus
+import json
 
 from base_test_views import TestViewSetBase
 from factories import TaskFactory
@@ -51,6 +52,5 @@ class TestTaskViewSet(TestViewSetBase):
 
     def test_delete(self):
         task = self.create(self.task_attributes)
-        id = self.expected_details(task, self.task_attributes)["id"]
-        expected_response = self.delete(id=id)
-        assert expected_response.status_code == HTTPStatus.NO_CONTENT
+        delete_response = self.delete(task["id"])
+        assert delete_response.status_code == HTTPStatus.NO_CONTENT
