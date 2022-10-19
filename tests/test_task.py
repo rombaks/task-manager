@@ -8,6 +8,7 @@ from factories import TaskFactory
 class TestTaskViewSet(TestViewSetBase):
     basename = "tasks"
     task_attributes = factory.build(dict, FACTORY_CLASS=TaskFactory)
+
     BATCH_SIZE = 3
     tasks_attributes = factory.build_batch(
         dict, FACTORY_CLASS=TaskFactory, size=BATCH_SIZE
@@ -31,14 +32,14 @@ class TestTaskViewSet(TestViewSetBase):
 
     def test_retrieve(self):
         task = self.create(self.task_attributes)
-        id = self.expected_details(task, self.task_attributes)["id"]
-        expected_response = self.retrieve(id=id)
-        assert task == expected_response
+        expected_response = self.expected_details(task, self.task_attributes)
+        retrieved_task = self.retrieve(task["id"])
+        assert retrieved_task == expected_response
 
     def test_list(self):
         tasks = self.create_batch(self.tasks_attributes)
         expected_response = self.expected_list(tasks, self.tasks_attributes)
-        task_list = self.list()
+        task_list =  self.list()
         assert task_list == expected_response
 
     def test_update(self):
