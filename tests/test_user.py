@@ -61,8 +61,7 @@ class TestUserViewSet(TestViewSetBase):
 
     def test_delete(self):
         user = self.create(self.user_attributes)
-        id = self.expected_details(user, self.user_attributes)["id"]
-        expected_response = self.delete(id=id)
+        expected_response = self.delete(user["id"])
         assert expected_response.status_code == HTTPStatus.NO_CONTENT
 
     def test_not_found(self):
