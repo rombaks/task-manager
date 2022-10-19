@@ -42,10 +42,10 @@ class TestUserViewSet(TestViewSetBase):
         expected_response = self.retrieve(id=id)
         assert user == expected_response
 
-    def test_retrieve_list(self):
+    def test_list(self):
         users = self.create_batch(self.users_attributes)
         expected_response = self.expected_list(users, self.users_attributes)
-        user_list = self.retrieve_list()
+        user_list = self.list()
         assert user_list == expected_response
 
     def test_update(self):
