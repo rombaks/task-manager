@@ -40,7 +40,7 @@ class TestTaskViewSet(TestViewSetBase):
     def test_list(self):
         tasks = self.create_batch(self.tasks_attributes)
         expected_response = self.expected_list(tasks, self.tasks_attributes)
-        task_list =  self.list()
+        task_list = self.list()
         assert task_list == expected_response
 
     def test_update(self):
