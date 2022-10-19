@@ -44,12 +44,19 @@ class TestUserViewSet(TestViewSetBase):
         user_list = self.list()
         assert user_list == expected_response
 
+    # def test_update(self):
+    #     user = self.create(self.user_attributes)
+    #     id = self.expected_details(user, self.user_attributes)["id"]
+    #     new_data = {"last_name": "Smith"}
+    #     expected_response = self.update(data=new_data, id=id)
+    #     updated_user = self.retrieve(id=id)
+    #     assert updated_user == expected_response
+
     def test_update(self):
         user = self.create(self.user_attributes)
-        id = self.expected_details(user, self.user_attributes)["id"]
         new_data = {"last_name": "Smith"}
-        expected_response = self.update(data=new_data, id=id)
-        updated_user = self.retrieve(id=id)
+        expected_response = self.update(new_data, user["id"])
+        updated_user = self.retrieve(user["id"])
         assert updated_user == expected_response
 
     def test_delete(self):
