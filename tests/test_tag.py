@@ -33,9 +33,9 @@ class TestTagViewSet(TestViewSetBase):
 
     def test_retrieve(self):
         tag = self.create(self.tag_attributes)
-        id = self.expected_details(tag, self.tag_attributes)["id"]
-        expected_response = self.retrieve(id=id)
-        assert tag == expected_response
+        expected_response = self.expected_details(tag, self.tag_attributes)
+        retrieved_tag = self.retrieve(tag["id"])
+        assert retrieved_tag == expected_response
 
     def test_list(self):
         tags = self.create_batch(self.tags_attributes)
@@ -45,16 +45,14 @@ class TestTagViewSet(TestViewSetBase):
 
     def test_update(self):
         tag = self.create(self.tag_attributes)
-        id = self.expected_details(tag, self.tag_attributes)["id"]
         new_data = {"title": "backup"}
-        expected_response = self.update(data=new_data, id=id)
-        updated_tag = self.retrieve(id=id)
+        expected_response = self.update(new_data, tag["id"])
+        updated_tag = self.retrieve(tag["id"])
         assert updated_tag == expected_response
 
     def test_delete(self):
         tag = self.create(self.tag_attributes)
-        id = self.expected_details(tag, self.tag_attributes)["id"]
-        expected_response = self.delete(id=id)
+        expected_response = self.delete(tag["id"])
         assert expected_response.status_code == HTTPStatus.NO_CONTENT
 
     def test_not_found(self):
