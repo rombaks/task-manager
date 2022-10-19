@@ -1,5 +1,6 @@
 import factory
 from http import HTTPStatus
+import json
 
 from base_test_views import TestViewSetBase
 from factories import UserFactory
@@ -7,16 +8,28 @@ from factories import UserFactory
 
 class TestUserViewSet(TestViewSetBase):
     basename = "users"
-    user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
+    # user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
 
-    BATCH_SIZE = 5
-    users_attribures = factory.build_batch(
+    BATCH_SIZE = 3
+    users_attributes = factory.build_batch(
         dict, FACTORY_CLASS=UserFactory, size=BATCH_SIZE
     )
+
+    user_attributes = users_attributes[0]
 
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
         return {**attributes, "id": entity["id"]}
+
+    @classmethod
+    def expected_list(cls, entity_list: list[dict], attributes_list: list[dict]):
+        authtorized_user = cls.retrieve(cls, id=1)
+        expected_list = [authtorized_user]
+
+        for index, entity in enumerate(entity_list):
+            entity_details = cls.expected_details(entity, attributes_list[index])
+            expected_list.append(entity_details)
+        return expected_list
 
     def test_create(self):
         user = self.create(self.user_attributes)
