@@ -47,7 +47,7 @@ class TestTaskViewSet(TestViewSetBase):
         task = self.create(self.task_attributes)
         new_data = {"title": "Build API 0.1.3"}
         updated_attributes = dict(self.task_attributes, **new_data)
-        expected_response =  self.expected_details(task, updated_attributes)
+        expected_response = self.expected_details(task, updated_attributes)
         response = self.update(new_data, task["id"])
         assert response == expected_response
 
