@@ -46,11 +46,12 @@ class TestTaskViewSet(TestViewSetBase):
     def test_update(self):
         task = self.create(self.task_attributes)
         new_data = {"title": "Build API 0.1.3"}
-        expected_response = self.update(new_data, task["id"])
-        updated_task = self.retrieve(task["id"])
-        assert updated_task == expected_response
+        updated_attributes = dict(self.task_attributes, **new_data)
+        expected_response =  self.expected_details(task, updated_attributes)
+        response = self.update(new_data, task["id"])
+        assert response == expected_response
 
     def test_delete(self):
         task = self.create(self.task_attributes)
-        delete_response = self.delete(task["id"])
-        assert delete_response.status_code == HTTPStatus.NO_CONTENT
+        response = self.delete(task["id"])
+        assert response.status_code == HTTPStatus.NO_CONTENT
