@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django_filters",
     "markdown",
     "drf_yasg",
+    "rest_framework_simplejwt",
     "task_manager.main.apps.MainConfig",
 ]
 
@@ -66,6 +67,9 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
 }
 
 TEMPLATES = [
