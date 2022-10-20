@@ -40,9 +40,19 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.CREATED, response.content
         return response.data
 
+    def create_batch(self, batch_attributes: list[dict]) -> list[dict]:
+        batch = [self.create(data) for data in batch_attributes]
+        return batch
+
     def retrieve(self, id: int = None) -> dict:
         self.client.force_login(self.user)
         response = self.client.get(self.detail_url(id))
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.data
+
+    def list(self) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.get(self.list_url())
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
@@ -62,4 +72,4 @@ class TestViewSetBase(APITestCase):
         self.client.logout()
         response = self.client.post(self.list_url(args), data=data)
         assert response.status_code == HTTPStatus.FORBIDDEN
-        return response
+        return response.data
