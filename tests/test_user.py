@@ -47,8 +47,8 @@ class TestUserViewSet(TestViewSetBase):
     def test_update(self):
         user = self.create(self.user_attributes)
         new_data = {"last_name": "Smith"}
-        updated_attributes = dict(self.tag_attributes, **new_data)
-        expected_response =  self.expected_details(tag, updated_attributes)
+        updated_attributes = dict(self.user_attributes, **new_data)
+        expected_response =  self.expected_details(user, updated_attributes)
         response = self.update(new_data, user["id"])
         assert response == expected_response
 
