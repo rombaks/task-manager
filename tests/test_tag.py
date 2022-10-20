@@ -1,6 +1,5 @@
 import factory
 from http import HTTPStatus
-import json
 
 from base_test_views import TestViewSetBase
 from factories import TagFactory
@@ -46,18 +45,19 @@ class TestTagViewSet(TestViewSetBase):
     def test_update(self):
         tag = self.create(self.tag_attributes)
         new_data = {"title": "backup"}
-        expected_response = self.update(new_data, tag["id"])
-        updated_tag = self.retrieve(tag["id"])
-        assert updated_tag == expected_response
+        updated_attributes = dict(self.tag_attributes, **new_data)
+        expected_response =  self.expected_details(tag, updated_attributes)
+        response = self.update(new_data, tag["id"])
+        assert response == expected_response
 
     def test_delete(self):
         tag = self.create(self.tag_attributes)
-        expected_response = self.delete(tag["id"])
-        assert expected_response.status_code == HTTPStatus.NO_CONTENT
+        response = self.delete(tag["id"])
+        assert response.status_code == HTTPStatus.NO_CONTENT
 
     def test_not_found(self):
-        expected_response = self.client.get("/not_found")
-        assert expected_response.status_code == HTTPStatus.NOT_FOUND
+        response = self.client.get("/not_found")
+        assert response.status_code == HTTPStatus.NOT_FOUND
 
     def test_anonymous_create(self):
         response = self.anonymous_create(self.tag_attributes)
