@@ -47,18 +47,19 @@ class TestUserViewSet(TestViewSetBase):
     def test_update(self):
         user = self.create(self.user_attributes)
         new_data = {"last_name": "Smith"}
-        expected_response = self.update(new_data, user["id"])
-        updated_user = self.retrieve(user["id"])
-        assert updated_user == expected_response
+        updated_attributes = dict(self.tag_attributes, **new_data)
+        expected_response =  self.expected_details(tag, updated_attributes)
+        response = self.update(new_data, user["id"])
+        assert response == expected_response
 
     def test_delete(self):
         user = self.create(self.user_attributes)
-        expected_response = self.delete(user["id"])
-        assert expected_response.status_code == HTTPStatus.NO_CONTENT
+        response = self.delete(user["id"])
+        assert response.status_code == HTTPStatus.NO_CONTENT
 
     def test_not_found(self):
-        expected_response = self.client.get("/not_found")
-        assert expected_response.status_code == HTTPStatus.NOT_FOUND
+        response = self.client.get("/not_found")
+        assert response.status_code == HTTPStatus.NOT_FOUND
 
     def test_anonymous_create(self):
         response = self.anonymous_create(self.user_attributes)
