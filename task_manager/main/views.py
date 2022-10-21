@@ -14,11 +14,11 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.select_related("author", "assignee").order_by("priority")
+    queryset = Task.objects.select_related("author", "assignee").order_by("id")
     serializer_class = TaskSerializer
     filterset_class = TaskFilter
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    queryset = Tag.objects.order_by("title")
+    queryset = Tag.objects.order_by("id")
     serializer_class = TagSerializer

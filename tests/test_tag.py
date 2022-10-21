@@ -16,7 +16,7 @@ class TestTagViewSet(TestViewSetBase):
 
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
-        return {**attributes, "id": entity["id"]}
+        return {"id": entity["id"], **attributes}
 
     def expected_list(self, entity_list: list[dict], attributes_list: list[dict]):
         expected_list = []
@@ -39,7 +39,9 @@ class TestTagViewSet(TestViewSetBase):
     def test_list(self):
         tags = self.create_batch(self.tags_attributes)
         expected_response = self.expected_list(tags, self.tags_attributes)
+        print("@@", expected_response)
         tag_list = self.list()
+        print("@@_1", tag_list, "\n")
         assert tag_list == expected_response
 
     def test_update(self):
