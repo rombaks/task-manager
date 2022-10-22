@@ -19,7 +19,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 class TestJWTAuth(APITestCase):
     token_url = reverse("token_obtain_pair")
     refresh_token_url = reverse("token_refresh")
-    any_api_url = "api"
+    any_api_url = "/api/users/"
 
     @staticmethod
     def create_user():
@@ -56,3 +56,14 @@ class TestJWTAuth(APITestCase):
         response = self.refresh_token_request(refresh_token)
         assert response.status_code == HTTPStatus.OK
         assert response.json()["access"]
+
+    def test_token_auth(self) -> None:
+        client = self.client_class()
+        response = client.get(self.any_api_url)
+        assert response.status_code == HTTPStatus.UNAUTHORIZED
+
+        response = self.token_request()
+        token = response.data["access"]
+        client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+        response = client.get(self.any_api_url)
+        assert response.status_code == HTTPStatus.OK
