@@ -1,10 +1,12 @@
-from http import HTTPStatus
+from datetime import timedelta
 import factory
-from base import faker
+from freezegun import freeze_time
+from http import HTTPStatus
 
 from django.urls import reverse
 from rest_framework.test import APITestCase
 
+from base import faker
 from task_manager.main.models import User
 
 
@@ -63,7 +65,15 @@ class TestJWTAuth(APITestCase):
         assert response.status_code == HTTPStatus.UNAUTHORIZED
 
         response = self.token_request()
-        token = response.data["access"]
+        token = response.json()["access"]
         client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
         response = client.get(self.any_api_url)
         assert response.status_code == HTTPStatus.OK
+
+    def test_refresh_lives_lower_than_one_day(self) -> None:
+        with freeze_time() as frozen_time:
+            refresh_token = self.get_refresh_token()
+            frozen_time.tick(timedelta(hours=23, minutes=59))
+            response = self.refresh_token_request(refresh_token)
+            assert response.status_code == HTTPStatus.OK
+            assert response.json()["access"]
