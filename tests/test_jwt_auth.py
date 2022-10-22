@@ -50,3 +50,9 @@ class TestJWTAuth(APITestCase):
     def test_unsuccessful_auth(self):
         response = self.token_request(username="incorrect_username")
         assert response.status_code == HTTPStatus.UNAUTHORIZED
+
+    def test_refresh_token(self):
+        refresh_token = self.get_refresh_token()
+        response = self.refresh_token_request(refresh_token)
+        assert response.status_code == HTTPStatus.OK
+        assert response.json()["access"]
