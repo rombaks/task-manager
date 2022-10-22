@@ -77,3 +77,10 @@ class TestJWTAuth(APITestCase):
             response = self.refresh_token_request(refresh_token)
             assert response.status_code == HTTPStatus.OK
             assert response.json()["access"]
+
+    def test_refresh_dies_after_one_day(self) -> None:
+        with freeze_time() as frozen_time:
+            refresh_token = self.get_refresh_token()
+            frozen_time.tick(timedelta(days=1))
+            response = self.refresh_token_request(refresh_token)
+            assert response.status_code == HTTPStatus.UNAUTHORIZED
