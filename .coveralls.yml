@@ -5,6 +5,7 @@ COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: test
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
@@ -17,10 +18,11 @@ jobs:
       with:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         parallel: true
-        flag-name: Unit Test
+        flag-name: Pytest
 
   coveralls_finish:
     needs: test
+    environment: test
     runs-on: ubuntu-latest
     steps:
     - name: Coveralls Finished
