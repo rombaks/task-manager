@@ -1,6 +1,5 @@
 name: push
 on: [push, pull_request]
-COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
 jobs:
   test:
@@ -14,7 +13,7 @@ jobs:
       run: make test
 
     - name: Coveralls
-      uses: AndreMiras/coveralls-python-action@develop
+      uses: rombaks/TaskManager@develop
       with:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         parallel: true
@@ -26,6 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Coveralls Finished
-      uses: AndreMiras/coveralls-python-action@develop
+      uses: rombaks/TaskManager@develop
       with:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         parallel-finished: true
