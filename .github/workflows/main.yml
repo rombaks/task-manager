@@ -23,9 +23,8 @@ jobs:
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
       - name: Upload coverage data to coveralls.io
-        run: coveralls --service=github
+        run: docker-compose --file docker-compose.ci.yml run --rm api coveralls --service=github
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_FLAG_NAME: ${{ matrix.test-name }}
           COVERALLS_PARALLEL: true
