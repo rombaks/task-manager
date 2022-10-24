@@ -11,10 +11,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    envinronment: test
     steps:
-      - uses: actions/checkout@v2
       - name: Run tests
+      - uses: actions/checkout@v2
         env:
           COVERAGE: true
           DJANGO_ENV: test
         run: docker-compose --file docker-compose.ci.yml run --rm api pytest
+    
