@@ -112,12 +112,28 @@ jinja2 = "*"
 name = "coverage"
 version = "6.5.0"
 description = "Code coverage measurement for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
 [package.extras]
 toml = ["tomli"]
+
+[[package]]
+name = "coveralls"
+version = "3.3.1"
+description = "Show coverage stats online via coveralls.io"
+category = "main"
+optional = false
+python-versions = ">= 3.5"
+
+[package.dependencies]
+coverage = ">=4.1,<6.0.0 || >6.1,<6.1.1 || >6.1.1,<7.0"
+docopt = ">=0.6.1"
+requests = ">=1.0.0"
+
+[package.extras]
+yaml = ["PyYAML (>=3.10)"]
 
 [[package]]
 name = "django"
@@ -179,6 +195,14 @@ doc = ["Sphinx (>=1.6.5,<2)", "sphinx-rtd-theme (>=0.1.9)"]
 lint = ["flake8", "pep8", "isort"]
 python-jose = ["python-jose (==3.3.0)"]
 test = ["cryptography", "pytest-cov", "pytest-django", "pytest-xdist", "pytest", "tox"]
+
+[[package]]
+name = "docopt"
+version = "0.6.2"
+description = "Pythonic argument parser, that will make you smile"
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "drf-yasg"
@@ -470,6 +494,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "pyyaml"
+version = "6.0"
+description = "YAML parser and emitter for Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "requests"
 version = "2.28.1"
 description = "Python HTTP for Humans."
@@ -586,7 +618,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "e9d847366026ce7c2e7ecec1f498dc85b8b042997d866d91488e60870e2edfe3"
+content-hash = "828749a8dc070a54d2967fc24977803967f7a1935f8aeb7bea0aed88daf8441c"
 
 [metadata.files]
 asgiref = []
@@ -599,10 +631,12 @@ colorama = []
 coreapi = []
 coreschema = []
 coverage = []
+coveralls = []
 django = []
 django-filter = []
 djangorestframework = []
 djangorestframework-simplejwt = []
+docopt = []
 drf-yasg = []
 factory-boy = []
 faker = []
@@ -628,6 +662,7 @@ pytest = []
 pytest-django = []
 python-dateutil = []
 pytz = []
+pyyaml = []
 requests = []
 "ruamel.yaml" = []
 "ruamel.yaml.clib" = []
