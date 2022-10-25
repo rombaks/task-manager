@@ -9,46 +9,14 @@ on:
       - 'develop'
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Step 1 - Echo out a GitHub Actions Secret to the logs
-        run: |
-          echo "The GitHub Action Secret will be masked:  "
-          echo ${{ secrets.HIDE_ME }}
-          echo "Trick to echo GitHub Actions Secret:  "
-          echo ${{secrets.HIDE_ME}} | sed 's/./& /g' 
       - uses: actions/checkout@v2
-
       - name: Run tests
         env:
           COVERAGE: true
           DJANGO_ENV: test
-          COVERALLS_REPO_TOKEN:  ${{ secrets.COVERALLS_REPO_TOKEN }}
-          REPO_TOKEN:  ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
-          echo "@@@_1"          
-          echo ${{ secrets.COVERALLS_REPO_TOKEN }}
-          echo "@@@_2"          
-          echo COVERALLS_REPO_TOKEN
-          echo "@@@_3"          
-          echo repo_token          
-          docker-compose --file docker-compose.ci.yml run --rm api make test
-
-      - name: Coveralls
-        uses: AndreMiras/coveralls-python-action@develop
-        with:
-          github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          COVERALLS_REPO_TOKEN:  ${{ secrets.COVERALLS_REPO_TOKEN }}
-          repo_token:  ${{ secrets.REPO_TOKEN }}
-          parallel: true
-          flag-name: Unit Test
-
-  coveralls_finish:
-      needs: test
-      runs-on: ubuntu-latest
-      steps:
-      - name: Coveralls Finished
-        uses: AndreMiras/coveralls-python-action@develop
-        with:
-          parallel-finished: true
+        docker-compose --file docker-compose.ci.yml run --rm api make test
+        docker-compose --file docker-compose.ci.yml run --rm api coveralls
