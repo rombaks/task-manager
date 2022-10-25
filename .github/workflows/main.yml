@@ -11,9 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: 
-      name: dev
-      url: https://github.com
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
@@ -22,9 +19,12 @@ jobs:
           DJANGO_ENV: test
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
-      - name: Upload coverage data to coveralls.io
-        run: docker-compose --file docker-compose.ci.yml run --rm api coveralls --service=github
+      - uses: AndreMiras/coveralls-python-action@develop
+      - name: Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_PARALLEL: true
+        run: docker-compose --file docker-compose.ci.yml run --rm api coveralls --service=github
+
+      - name: Upload coverage data to coveralls.io
