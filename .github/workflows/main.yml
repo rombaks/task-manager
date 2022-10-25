@@ -19,10 +19,27 @@ jobs:
           DJANGO_ENV: test
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
-      - uses: AndreMiras/coveralls-python-action@develop
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+
+      - name: Pytest
+        run: make test
+
       - name: Coveralls
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_PARALLEL: true
-        run: docker-compose --file docker-compose.ci.yml run --rm api coveralls --service=github
+        uses: AndreMiras/coveralls-python-action@develop
+        with:
+          github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          parallel: true
+          flag-name: Unit Test
+
+    coveralls_finish:
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
+      - name: Coveralls Finished
+        uses: AndreMiras/coveralls-python-action@develop
+        with:
+          parallel-finished: true
