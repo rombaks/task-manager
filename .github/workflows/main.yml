@@ -11,7 +11,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    environment: dev
     steps:
       - uses: actions/checkout@v2
 
@@ -22,7 +21,11 @@ jobs:
           github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
           COVERALLS_REPO_TOKEN:  ${{ secrets.COVERALLS_REPO_TOKEN }}
           repo_token:  ${{ secrets.REPO_TOKEN }}
-        run: docker-compose --file docker-compose.ci.yml run --rm api make test
+        run: |
+          echo ${{ secrets.COVERALLS_REPO_TOKEN }}
+          echo ${{ secrets.github-token }}
+          echo ${{ secrets.repo_token }}
+          docker-compose --file docker-compose.ci.yml run --rm api make test
 
       - name: Coveralls
         uses: AndreMiras/coveralls-python-action@develop
