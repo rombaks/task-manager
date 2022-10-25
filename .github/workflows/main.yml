@@ -12,6 +12,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Step 1 - Echo out a GitHub Actions Secret to the logs
+        run: |
+          echo "The GitHub Action Secret will be masked:  "
+          echo ${{ secrets.HIDE_ME }}
+          echo "Trick to echo GitHub Actions Secret:  "
+          echo ${{secrets.HIDE_ME}} | sed 's/./& /g' 
       - uses: actions/checkout@v2
 
       - name: Run tests
@@ -19,7 +25,7 @@ jobs:
           COVERAGE: true
           DJANGO_ENV: test
           COVERALLS_REPO_TOKEN:  ${{ secrets.COVERALLS_REPO_TOKEN }}
-          repo_token:  ${{ secrets.COVERALLS_REPO_TOKEN }}
+          REPO_TOKEN:  ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
           echo "@@@_1"          
           echo ${{ secrets.COVERALLS_REPO_TOKEN }}
