@@ -26,5 +26,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_PARALLEL: true
         run: docker-compose --file docker-compose.ci.yml run --rm api coveralls --service=github
-
-      - name: Upload coverage data to coveralls.io
