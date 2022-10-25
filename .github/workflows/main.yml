@@ -24,6 +24,18 @@ jobs:
           repo_token:  ${{ secrets.REPO_TOKEN }}
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
+<<<<<<< HEAD
+=======
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+
+      - name: Pytest
+        run: docker-compose --file docker-compose.ci.yml run --rm api make test
+
+>>>>>>> a14a9a8b86a3fc1ea937981522447c3c212724a7
       - name: Coveralls
         uses: AndreMiras/coveralls-python-action@develop
         with:
