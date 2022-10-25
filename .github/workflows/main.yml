@@ -18,13 +18,15 @@ jobs:
         env:
           COVERAGE: true
           DJANGO_ENV: test
-          github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
           COVERALLS_REPO_TOKEN:  ${{ secrets.COVERALLS_REPO_TOKEN }}
-          repo_token:  ${{ secrets.REPO_TOKEN }}
+          repo_token:  ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
+          echo "@@@_1"          
           echo ${{ secrets.COVERALLS_REPO_TOKEN }}
-          echo ${{ secrets.github-token }}
-          echo ${{ secrets.repo_token }}
+          echo "@@@_2"          
+          echo COVERALLS_REPO_TOKEN
+          echo "@@@_3"          
+          echo repo_token          
           docker-compose --file docker-compose.ci.yml run --rm api make test
 
       - name: Coveralls
