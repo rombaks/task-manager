@@ -28,6 +28,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "my_default_secret_key")
 DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
+CSRF_TRUSTED_ORIGINS = ['https://dbl-tm.herokuapp.com/']
 
 
 # Application definition
