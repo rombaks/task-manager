@@ -264,6 +264,20 @@ python-versions = ">=3.6"
 python-dateutil = ">=2.7"
 
 [[package]]
+name = "gunicorn"
+version = "20.1.0"
+description = "WSGI HTTP Server for UNIX"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.extras]
+eventlet = ["eventlet (>=0.24.1)"]
+gevent = ["gevent (>=1.4.0)"]
+setproctitle = ["setproctitle"]
+tornado = ["tornado (>=0.2)"]
+
+[[package]]
 name = "idna"
 version = "3.4"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -618,7 +632,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "828749a8dc070a54d2967fc24977803967f7a1935f8aeb7bea0aed88daf8441c"
+content-hash = "29ef99af6b376eb1e46b03c5434209c55f8698887c4e29a22585f34a825152de"
 
 [metadata.files]
 asgiref = []
@@ -641,6 +655,7 @@ drf-yasg = []
 factory-boy = []
 faker = []
 freezegun = []
+gunicorn = []
 idna = []
 importlib-metadata = []
 inflection = []
