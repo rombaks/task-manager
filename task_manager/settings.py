@@ -25,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "my_default_secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
-CSRF_TRUSTED_ORIGINS = ['https://dbl-tm.herokuapp.com/']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
+CSRF_TRUSTED_ORIGINS = ["https://dbl-tm.herokuapp.com"]
 
 
 # Application definition
@@ -150,8 +150,8 @@ STATIC_URL = "static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"\
-
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Configure Django App for Heroku.
 import django_on_heroku
+
 django_on_heroku.settings(locals())
