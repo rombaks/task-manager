@@ -10,12 +10,6 @@ from .serializers import UserSerializer, TaskSerializer, TagSerializer
 from .filters import UserFilter, TaskFilter
 
 
-def index(request):
-    a = None
-    a.hello() # Creating an error with an invalid line of code
-    return HttpResponse("Hello, world. You're at the pollapp index.")
-
-
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.order_by("id")
     serializer_class = UserSerializer
