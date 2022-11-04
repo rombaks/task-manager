@@ -20,7 +20,7 @@ class User(AbstractUser):
     phone = models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.first_name[:1]}.{self.last_name} [{self.role[:1]}][id{self.id}]"
+        return f"{self.first_name[:1]}.{self.last_name}"
 
     class Meta:
         verbose_name = "User"
