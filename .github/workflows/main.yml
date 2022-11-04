@@ -17,6 +17,12 @@ jobs:
         env:
           COVERAGE: true
           DJANGO_ENV: test
+          EMAIL_USE_SSL: ${{ secrets.EMAIL_USE_SSL }}
+          EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+          EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
   
   test:
@@ -33,6 +39,7 @@ jobs:
       with:
         parallel: true
         flag-name: Unit Test
+        
 
   coveralls_finish:
     needs: test
