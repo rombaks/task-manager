@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from rest_framework import viewsets
-import django_filters
 
 
 from .models import User, Task, Tag

@@ -29,7 +29,7 @@ class TaskFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Task
 
-    title = factory.LazyAttribute(lambda _: faker.unique.word())
+    title = factory.LazyAttribute(lambda _: faker.text(max_nb_chars=10))
     description = factory.LazyAttribute(lambda _: faker.text(max_nb_chars=50))
 
     author = None
@@ -58,6 +58,7 @@ class TaskFactory(factory.django.DjangoModelFactory):
             ]
         )
     )
+
     priority = factory.LazyAttribute(
         lambda _: faker.word(
             ext_word_list=[
@@ -68,4 +69,3 @@ class TaskFactory(factory.django.DjangoModelFactory):
             ]
         )
     )
-    tag = []

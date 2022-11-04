@@ -1,6 +1,5 @@
 import factory
 from http import HTTPStatus
-import json
 
 from base_test_views import TestViewSetBase
 from factories import TaskFactory

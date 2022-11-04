@@ -14,14 +14,12 @@ import os
 
 from pathlib import Path
 
+from task_manager.main.utils import strtobool
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "my_default_secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -84,7 +82,7 @@ REST_FRAMEWORK = {
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -157,3 +155,11 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# SMTP configuration
+EMAIL_USE_SSL = strtobool(os.environ.get("EMAIL_USE_SSL", "0"))
+EMAIL_USE_TLS = strtobool(os.environ.get("EMAIL_USE_TLS", "0"))
+EMAIL_HOST = os.environ["EMAIL_HOST"]
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+EMAIL_PORT = os.environ["EMAIL_PORT"]
