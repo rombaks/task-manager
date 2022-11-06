@@ -35,7 +35,7 @@ jobs:
         uses: AndreMiras/coveralls-python-action@develop
         with:
           parallel: true
-          flag-name: Pytest
+          flag-name: Run test
 
   coveralls_finish:
     needs: build
