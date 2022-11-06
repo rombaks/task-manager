@@ -13,8 +13,6 @@ def send_assign_notification(task_id: int) -> None:
         context={"task": task},
         recipients=[assignee.email],
     )
-
-
 def send_html_email(
     subject: str, template: str, context: dict, recipients: list[str]
 ) -> None:
