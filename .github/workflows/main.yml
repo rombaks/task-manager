@@ -8,39 +8,25 @@ on:
     branches:
       - 'develop'
 
+env:
+  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+  POST_SERVER_ITEM_ACCESS_TOKEN: ${{ secrets.POST_SERVER_ITEM_ACCESS_TOKEN }}
+  EMAIL_USE_SSL: ${{ secrets.EMAIL_USE_SSL }}
+  EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
+  EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+  EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+  EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+  EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+
       - name: Run tests
         env:
           COVERAGE: true
           DJANGO_ENV: test
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
-  
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v1
-
-    - name: Pytest
-      run: docker-compose --file docker-compose.ci.yml run --rm api make test
-
-    - name: Coveralls
-      uses: AndreMiras/coveralls-python-action@develop
-      with:
-        parallel: true
-        flag-name: Unit Test
-
-  coveralls_finish:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - name: Coveralls Finished
-      uses: AndreMiras/coveralls-python-action@develop
-      with:
-        parallel-finished: true
-        
-
