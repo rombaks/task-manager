@@ -8,7 +8,8 @@ on:
     branches:
       - 'develop'
 
-env: 
+env:
+  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
   EMAIL_USE_SSL: ${{ secrets.EMAIL_USE_SSL }}
   EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
   EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
