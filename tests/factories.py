@@ -69,3 +69,9 @@ class TaskFactory(factory.django.DjangoModelFactory):
             ]
         )
     )
+
+    @factory.post_generation
+    def tag(self, create, extracted, **kwargs):
+        if not create or not extracted:
+            return
+        self.groups.add(*extracted)

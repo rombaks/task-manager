@@ -16,7 +16,7 @@ class TestTaskViewSet(TestViewSetBase):
 
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
-        return {**attributes, "id": entity["id"]}
+        return {**attributes, "id": entity["id"], "tag": []}
 
     def expected_list(self, entity_list: list[dict], attributes_list: list[dict]):
         expected_list = []
