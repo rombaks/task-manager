@@ -45,6 +45,10 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
 )
 
+admin.site.site_header = "Task Manager"
+admin.site.site_title = "DBL"
+admin.site.index_title = "Task Manager"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
