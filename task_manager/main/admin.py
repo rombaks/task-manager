@@ -53,11 +53,24 @@ class TaskAdmin(admin.ModelAdmin):
         "state",
         "priority",
     )
-    list_display_links = ("title",)
+    list_display_links = (
+        "title",
+        "author",
+        "assignee",
+    )
     search_fields = ("title",)
 
-    list_editable = ("state",)
+    list_editable = ("state", "priority")
     list_filter = ("state", "priority")
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "author":
+            kwargs["queryset"] = User.objects.filter(role="Manager")
+
+        if db_field.name == "assignee":
+            kwargs["queryset"] = User.objects.filter(role="Developer")
+
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 class TagAdmin(admin.ModelAdmin):
