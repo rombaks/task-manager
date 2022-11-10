@@ -5,6 +5,7 @@ from django.core.validators import FileExtensionValidator
 from .models import tag, user, task
 from task_manager.settings import UPLOAD_MAX_SIZES
 
+
 class FileMaxSizeValidator:
     def __init__(self, max_size: int) -> None:
         self.max_size = max_size
