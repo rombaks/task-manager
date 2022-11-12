@@ -69,3 +69,14 @@ class TestUserViewSet(TestViewSetBase):
     def test_not_found(self):
         response = self.client.get("/not_found")
         assert response.status_code == HTTPStatus.NOT_FOUND
+
+    def test_large_avatar(self) -> None:
+        user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
+        user_attributes["avatar_picture"] = SimpleUploadedFile(
+            "large.jpg", b"x" * 2 * 1024 * 1024
+        )
+        response = self.request_create(user_attributes)
+        assert response.status_code == HTTPStatus.BAD_REQUEST
+        assert response.json() == {
+            "avatar_picture": ["Maximum size 1048576 exceeded."]
+        }
