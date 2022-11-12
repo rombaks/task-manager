@@ -1,5 +1,6 @@
 import factory
 from http import HTTPStatus
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from base_test_views import TestViewSetBase
 from factories import UserFactory
@@ -7,7 +8,6 @@ from factories import UserFactory
 
 class TestUserViewSet(TestViewSetBase):
     basename = "users"
-    user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
 
     BATCH_SIZE = 3
     users_attributes = factory.build_batch(
@@ -16,7 +16,11 @@ class TestUserViewSet(TestViewSetBase):
 
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
-        return {**attributes, "id": entity["id"]}
+        return {
+            **attributes,
+            "id": entity["id"],
+            "avatar_picture": entity["avatar_picture"],
+        }
 
     def expected_list(self, entity_list: list[dict], attributes_list: list[dict]):
         authtorized_user = self.retrieve(self.user.id)
@@ -28,13 +32,15 @@ class TestUserViewSet(TestViewSetBase):
         return expected_list
 
     def test_create(self):
-        user = self.create(self.user_attributes)
-        expected_response = self.expected_details(user, self.user_attributes)
+        user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
+        user = self.create(user_attributes)
+        expected_response = self.expected_details(user, user_attributes)
         assert user == expected_response
 
     def test_retrieve(self):
-        user = self.create(self.user_attributes)
-        expected_response = self.expected_details(user, self.user_attributes)
+        user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
+        user = self.create(user_attributes)
+        expected_response = self.expected_details(user, user_attributes)
         retrieved_user = self.retrieve(user["id"])
         assert retrieved_user == expected_response
 
@@ -45,15 +51,18 @@ class TestUserViewSet(TestViewSetBase):
         assert user_list == expected_response
 
     def test_update(self):
-        user = self.create(self.user_attributes)
+        user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
+        user = self.create(user_attributes)
         new_data = {"last_name": "Smith"}
-        updated_attributes = dict(self.user_attributes, **new_data)
+        updated_attributes = dict(user_attributes, **new_data)
         expected_response = self.expected_details(user, updated_attributes)
+        expected_response["avatar_picture"] = user["avatar_picture"]
         response = self.update(new_data, user["id"])
         assert response == expected_response
 
     def test_delete(self):
-        user = self.create(self.user_attributes)
+        user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
+        user = self.create(user_attributes)
         response = self.delete(user["id"])
         assert response.status_code == HTTPStatus.NO_CONTENT
 
