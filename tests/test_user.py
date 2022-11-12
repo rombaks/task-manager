@@ -77,16 +77,14 @@ class TestUserViewSet(TestViewSetBase):
         )
         response = self.request_create(user_attributes)
         assert response.status_code == HTTPStatus.BAD_REQUEST
-        assert response.json() == {
-            "avatar_picture": ["Maximum size 1048576 exceeded."]
-        }
+        assert response.json() == {"avatar_picture": ["Maximum size 1048576 exceeded."]}
 
     def test_avatar_bad_extension(self) -> None:
         user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
 
         bad_extension = "bad_extension.pdf"
         correct_size = b"x" * 1 * 1024 * 1024
-        
+
         user_attributes["avatar_picture"] = SimpleUploadedFile(
             bad_extension, correct_size
         )
