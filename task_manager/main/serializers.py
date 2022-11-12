@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.core.files.base import File
 from django.core.validators import FileExtensionValidator
+from django.core.exceptions import ValidationError
 
 from .models import tag, user, task
 from task_manager.settings import UPLOAD_MAX_SIZES
