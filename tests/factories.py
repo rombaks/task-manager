@@ -1,7 +1,10 @@
 import factory
 
-from base import faker
+from base import faker, ImageFileProvider
 from task_manager.main.models import User, Task, Tag
+
+
+factory.Faker.add_provider(ImageFileProvider)
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -16,6 +19,7 @@ class UserFactory(factory.django.DjangoModelFactory):
         lambda _: faker.date_of_birth().strftime("%Y-%m-%d")
     )
     phone = factory.LazyAttribute(lambda _: faker.unique.phone_number())
+    avatar_picture = factory.Faker("image_file", fmt="jpeg")
 
 
 class TagFactory(factory.django.DjangoModelFactory):
@@ -31,9 +35,6 @@ class TaskFactory(factory.django.DjangoModelFactory):
 
     title = factory.LazyAttribute(lambda _: faker.text(max_nb_chars=10))
     description = factory.LazyAttribute(lambda _: faker.text(max_nb_chars=50))
-
-    author = None
-    assignee = None
 
     created_at = factory.LazyAttribute(
         lambda _: faker.past_datetime().strftime("%Y-%m-%dT%XZ")
