@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from task_manager.main.services.storage_backends import public_storage
+
 
 class User(AbstractUser):
     class Roles(models.TextChoices):
@@ -18,6 +20,8 @@ class User(AbstractUser):
 
     date_of_birth = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=30, null=True, blank=True)
+
+    avatar_picture = models.ImageField(null=True, storage=public_storage)
 
     def __str__(self):
         return f"{self.first_name[:1]}.{self.last_name}"

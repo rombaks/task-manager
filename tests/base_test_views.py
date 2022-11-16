@@ -40,6 +40,11 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.CREATED, response.content
         return response.data
 
+    def request_create(self, data: dict, args: List[Union[str, int]] = None) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.post(self.list_url(args), data=data)
+        return response
+
     def create_batch(self, batch_attributes: list[dict]) -> list[dict]:
         batch = [self.create(data) for data in batch_attributes]
         return batch
