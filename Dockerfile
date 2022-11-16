@@ -44,4 +44,4 @@ RUN poetry install  --no-interaction --no-ansi
 ADD . /app
 ENV DJANGO_SETTINGS_MODULE="task_manager.settings"
 
-CMD gunicorn task_manager.wsgi:application --bind 0.0.0.0:$PORT
+CMD NEW_RELIC_CONFIG_FILE=newrelic.ini newrelic-admin run-program gunicorn task_manager.wsgi:application --bind 0.0.0.0:$PORT
