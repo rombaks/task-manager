@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+  <title>Task manager</title>
+{% endblock %}
+
+{% block content %}
+
+  {% with msg=msg %}
+    {% include "components/alerts.html" %}
+  {% endwith %}
+
+  <div class="container">
+  <div class="row">
+    <div class="col">
+      <h1 class="display-6">Helps you to get things done!</h1>
+      <p>
+        <ul>
+            <li>user roles with different permissions (Developer, Manager and Admin)</li>
+            <li>tasks with a variety of states (from new to achieved)</li>
+            <li>email notifications</li>
+            <li>admin panel for management</li>
+        </ul>
+      </p>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}

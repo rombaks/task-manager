@@ -1,42 +1,31 @@
 <!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="fastapitutorial.com" content="Nofoobar" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+            crossorigin="anonymous"
+        />
 
-{% load static %}
+        {% block title %} {% endblock %}
+    </head>
 
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{% block title %}{% endblock %}</title>
-</head>
-<body style="background-color: #F4F6FA; padding: 20px;">
-<div style="width:90%;max-width:700px; background-color: #FFF;margin: 20px auto; padding: 3%;
-border: 1px solid #E0E0E1; border-radius: 10px;">
-    <img src="{{ domain }}{% static 'img/logo.png' %}" width="120px" alt="project logo">
-    <hr style="
-        background-color: #E0E0E1;
-        display: block;
-        height: 1px;
-        border: 0;
-        border-top: 1px solid #e0e0e1;
-        margin: 1em 0;
-        color:#E0E0E1;">
-    {% block content %}
-    {% endblock %}
-    <br>
-    <br>
-    <hr>
-    <br>
-    <div style="padding: 12px 24px 12px 24px; background-color: #F4F6FA; border-radius: 8px; width:100%;max-width: 650px;">
-    <p style="font-size: 16px;
-        line-height: 24px;
-        color: black;">A simple task management app</p>
-    <a style="font-size: 16px;
-        line-height: 24px; color:#FF5722" href="https://example.com/">Learn More</a>
-    </div>
-    <p style="text-align: center;
-        font-size: 16px;
-        line-height: 24px;
-        color: black;">© 2022 Task manager</p>
-</div>
-</body>
+    <body>
+        {% include "components/navbar.html" %}
+        {% block content %}
+        {% endblock %}
+
+        {% include "components/footer.html" %}
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"
+        ></script>
+        {% block scripts %} {% endblock %}
+    </body>
 </html>
