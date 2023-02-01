@@ -130,3 +130,6 @@ dmypy.json
 
 # NewRelic
 newrelic.ini
+
+# VS code
+.vscode/settings.json
