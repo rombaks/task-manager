@@ -17,7 +17,7 @@ Project helps you to get things done! It provides:
 -   Clone the repo.
 
 ```
-git clone git@github.com:rombaks/TaskManager.git
+git clone git@github.com:rombaks/task-manager.git
 ```
 
 -   Add your credentials to `.env` file for a local development
@@ -61,7 +61,7 @@ docker-compose up
 
 ---
 
-### Additional info:
+### Additional info
 
 - API: Django REST framework. Docs http://localhost:8000/swagger/
 - Admin panel: Django admin  http://localhost:8000/admin/
