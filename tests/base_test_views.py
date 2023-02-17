@@ -81,10 +81,10 @@ class TestViewSetBase(APITestCase):
         return response.data
 
     def request_single_resource(self, data: dict = None) -> Response:
+        self.client.force_login(self.user)
         return self.client.get(self.list_url(), data=data)
 
     def single_resource(self, data: dict = None) -> dict:
-        self.client.force_login(self.user)
         response = self.request_single_resource(data)
         assert response.status_code == HTTPStatus.OK
         return response.data
