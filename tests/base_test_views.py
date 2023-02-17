@@ -57,6 +57,10 @@ class TestViewSetBase(APITestCase):
         response = self.client.get(self.list_url())
         return response
 
+    def request_update(self, data: dict, id: int = None) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.patch(self.detail_url(id), data=data)
+        return response
     def create_batch(self, batch_attributes: list[dict]) -> list[dict]:
         batch = [self.create(data) for data in batch_attributes]
         return batch
@@ -72,8 +76,7 @@ class TestViewSetBase(APITestCase):
         return response.data
 
     def update(self, data: dict, id: int = None) -> dict:
-        self.client.force_login(self.user)
-        response = self.client.patch(self.detail_url(id), data=data)
+        response = self.request_update(data, id)
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
