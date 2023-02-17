@@ -3,7 +3,7 @@ from http import HTTPStatus
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from base_test_views import TestViewSetBase
-from factories import UserFactory
+from fixtures.factories import UserFactory
 
 
 class TestUserViewSet(TestViewSetBase):
