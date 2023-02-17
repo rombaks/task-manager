@@ -2,6 +2,11 @@ import copy
 from typing import Any, List, TYPE_CHECKING
 
 from rest_framework import routers
+if TYPE_CHECKING:
+    BaseViewMixinBaseClass = viewsets.GenericViewSet
+else:
+    BaseViewMixinBaseClass = object
+
 
 class BulkRouter(routers.SimpleRouter):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
