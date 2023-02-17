@@ -7,7 +7,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
 
 from task_manager.main.models import User
-from factories import UserFactory
+from fixtures.factories import UserFactory
 
 
 class TestViewSetBase(APITestCase):

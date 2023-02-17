@@ -2,7 +2,7 @@ import factory
 from http import HTTPStatus
 
 from base_test_views import TestViewSetBase
-from factories import TaskFactory
+from fixtures.factories import TaskFactory
 
 
 class TestTaskViewSet(TestViewSetBase):

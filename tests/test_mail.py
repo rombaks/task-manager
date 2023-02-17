@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from task_manager.main.models import Task
 from task_manager.services.mail import send_assign_notification
 from tests.base_test_views import TestViewSetBase
-from factories import UserFactory, TaskFactory
+from fixtures.factories import UserFactory, TaskFactory
 
 
 class TestSendEmail(TestViewSetBase):
