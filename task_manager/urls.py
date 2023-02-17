@@ -25,13 +25,15 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from .main.views import UserViewSet, TaskViewSet, TagViewSet
+from .main.views import UserViewSet, TaskViewSet, TagViewSet, CurrentUserViewSet
+from .main.services.single_resource import BulkRouter
 
 
-router = routers.SimpleRouter()
+router = BulkRouter()
 router.register(r"users", UserViewSet, basename="users")
 router.register(r"tasks", TaskViewSet, basename="tasks")
 router.register(r"tags", TagViewSet, basename="tags")
+router.register(r"current-user", CurrentUserViewSet, basename="current_user")
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -66,7 +68,5 @@ urlpatterns = [
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
     ),
-    re_path(
-        r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
-    ),
+    re_path(r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
