@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.test import APIClient, APITestCase
 
 from task_manager.main.models import User
-from fixtures.factories import UserFactory
+from tests.fixtures.factories import UserFactory
 from tests.fixtures.action_client import ActionClient
 
 
