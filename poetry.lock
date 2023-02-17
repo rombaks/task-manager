@@ -281,6 +281,17 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "drf-extensions"
+version = "0.7.1"
+description = "Extensions for Django REST Framework"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+djangorestframework = ">=3.9.3"
+
+[[package]]
 name = "drf-yasg"
 version = "1.21.4"
 description = "Automated generation of real Swagger/OpenAPI 2.0 schemas from Django Rest Framework code."
@@ -779,7 +790,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "51819031d15cf5e9d60206bd12b6c513548b116dc68de4af19402ab168b59c6c"
+content-hash = "1a553d3aa6d2f7ed32cf3107d5c5f40cb201faebbe0bfe38b1f19cabe32b6156"
 
 [metadata.files]
 asgiref = []
@@ -803,6 +814,7 @@ django-storages = []
 djangorestframework = []
 djangorestframework-simplejwt = []
 docopt = []
+drf-extensions = []
 drf-yasg = []
 exceptiongroup = []
 factory-boy = []
