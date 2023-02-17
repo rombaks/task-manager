@@ -4,6 +4,7 @@ from http import HTTPStatus
 from typing import List, Union
 
 from django.urls import reverse
+from rest_framework.response import Response
 from rest_framework.test import APIClient, APITestCase
 
 from task_manager.main.models import User
@@ -77,4 +78,13 @@ class TestViewSetBase(APITestCase):
         self.client.logout()
         response = self.client.post(self.list_url(args), data=data)
         assert response.status_code == HTTPStatus.FORBIDDEN
+        return response.data
+
+    def request_single_resource(self, data: dict = None) -> Response:
+        return self.client.get(self.list_url(), data=data)
+
+    def single_resource(self, data: dict = None) -> dict:
+        self.client.force_login(self.user)
+        response = self.request_single_resource(data)
+        assert response.status_code == HTTPStatus.OK
         return response.data
