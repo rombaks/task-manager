@@ -47,13 +47,17 @@ class TestViewSetBase(APITestCase):
         response = self.client.post(self.list_url(args), data=data)
         return response
 
+    def request_retrieve(self, id: int = None):
+        self.client.force_login(self.user)
+        response = self.client.get(self.detail_url(id))
+        return response
+
     def create_batch(self, batch_attributes: list[dict]) -> list[dict]:
         batch = [self.create(data) for data in batch_attributes]
         return batch
 
     def retrieve(self, id: int = None) -> dict:
-        self.client.force_login(self.user)
-        response = self.client.get(self.detail_url(id))
+        response = self.request_retrieve(id)
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
