@@ -1,6 +1,6 @@
 from typing import cast
 from rest_framework import viewsets
-from main.services.single_resource import SingleResourceMixin, SingleResourceUpdateMixin
+from .services.single_resource import SingleResourceMixin, SingleResourceUpdateMixin
 
 
 from .models import User, Task, Tag
