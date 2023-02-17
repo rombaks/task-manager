@@ -20,3 +20,13 @@ class BulkRouter(routers.SimpleRouter):
         self.routes: List[routers.Route] = copy.deepcopy(self.routes)
         self.routes[0].mapping.update({"patch": "partial_bulk_update"})
         self.routes[0].mapping.update({"put": "bulk_update"})
+
+
+class SingleResourceMixin(BaseViewMixinBaseClass):
+    pagination_class = None
+
+    def list(self, _: Request, *__: Any, **___: Any) -> Response:
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
