@@ -61,6 +61,12 @@ class TestViewSetBase(APITestCase):
         self.client.force_login(self.user)
         response = self.client.patch(self.detail_url(id), data=data)
         return response
+
+    def request_delete(self, id: int = None) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.delete(self.detail_url(id))
+        return response
+
     def create_batch(self, batch_attributes: list[dict]) -> list[dict]:
         batch = [self.create(data) for data in batch_attributes]
         return batch
@@ -81,8 +87,7 @@ class TestViewSetBase(APITestCase):
         return response.data
 
     def delete(self, id: int = None) -> dict:
-        self.client.force_login(self.user)
-        response = self.client.delete(self.detail_url(id))
+        response = self.request_delete(id)
         assert response.status_code == HTTPStatus.NO_CONTENT
         return response
 
