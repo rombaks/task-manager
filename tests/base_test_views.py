@@ -88,3 +88,13 @@ class TestViewSetBase(APITestCase):
         response = self.request_single_resource(data)
         assert response.status_code == HTTPStatus.OK
         return response.data
+
+    def request_patch_single_resource(self, attributes: dict) -> Response:
+        self.client.force_login(self.user)
+        url = self.list_url()
+        return self.client.patch(url, data=attributes)
+
+    def patch_single_resource(self, attributes: dict) -> dict:
+        response = self.request_patch_single_resource(attributes)
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.data
