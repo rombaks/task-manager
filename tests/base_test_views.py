@@ -47,12 +47,12 @@ class TestViewSetBase(APITestCase):
         response = self.client.post(self.list_url(args), data=data)
         return response
 
-    def request_retrieve(self, id: int = None):
+    def request_retrieve(self, id: int = None) -> dict:
         self.client.force_login(self.user)
         response = self.client.get(self.detail_url(id))
         return response
 
-    def request_list(self):
+    def request_list(self) -> dict:
         self.client.force_login(self.user)
         response = self.client.get(self.list_url())
         return response
