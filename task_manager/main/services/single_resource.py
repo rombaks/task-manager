@@ -40,6 +40,8 @@ class SingleResourceUpdateMixin(BaseViewMixinBaseClass):
         serializer.save()
         return Response(serializer.data)
 
-    def partial_bulk_update(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+    def partial_bulk_update(
+        self, request: Request, *args: Any, **kwargs: Any
+    ) -> Response:
         kwargs["partial"] = True
         return self.bulk_update(request, *args, **kwargs)

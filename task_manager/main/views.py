@@ -14,7 +14,9 @@ class UserViewSet(viewsets.ModelViewSet):
     filterset_class = UserFilter
 
 
-class CurrentUserViewSet(SingleResourceMixin, SingleResourceUpdateMixin, viewsets.ModelViewSet):
+class CurrentUserViewSet(
+    SingleResourceMixin, SingleResourceUpdateMixin, viewsets.ModelViewSet
+):
     serializer_class = UserSerializer
     queryset = User.objects.order_by("id")
 
