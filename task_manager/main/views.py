@@ -6,6 +6,7 @@ from .services.single_resource import SingleResourceMixin, SingleResourceUpdateM
 from .models import User, Task, Tag
 from .serializers import UserSerializer, TaskSerializer, TagSerializer
 from .filters import UserFilter, TaskFilter
+from rest_framework_extensions.mixins import NestedViewSetMixin
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -22,6 +23,15 @@ class CurrentUserViewSet(
 
     def get_object(self) -> User:
         return cast(User, self.request.user)
+
+
+class UserTasksViewSet(NestedViewSetMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = (
+        Task.objects.order_by("id")
+        .select_related("author", "assignee")
+        .prefetch_related("tags")
+    )
+    serializer_class = TaskSerializer
 
 
 class TaskViewSet(viewsets.ModelViewSet):
