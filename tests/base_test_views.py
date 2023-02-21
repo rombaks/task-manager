@@ -31,8 +31,8 @@ class TestViewSetBase(APITestCase):
         return User.objects.create(**user_attributes)
 
     @classmethod
-    def detail_url(cls, key: Union[int, str]) -> str:
-        return reverse(f"{cls.basename}-detail", args=[key])
+    def detail_url(cls, args: List[Union[str, int]] = None) -> str:
+        return reverse(f"{cls.basename}-detail", args=args)
 
     @classmethod
     def list_url(cls, args: List[Union[str, int]] = None) -> str:
@@ -48,14 +48,14 @@ class TestViewSetBase(APITestCase):
         response = self.client.post(self.list_url(args), data=data)
         return response
 
-    def request_retrieve(self, id: int = None) -> dict:
+    def request_retrieve(self, args: List[Union[str, int]] = None) -> dict:
         self.client.force_login(self.user)
-        response = self.client.get(self.detail_url(id))
+        response = self.client.get(self.detail_url(args))
         return response
 
-    def request_list(self) -> dict:
+    def request_list(self, args: List[Union[str, int]] = None) -> dict:
         self.client.force_login(self.user)
-        response = self.client.get(self.list_url())
+        response = self.client.get(self.list_url(args))
         return response
 
     def request_update(self, data: dict, id: int = None) -> dict:
@@ -72,13 +72,13 @@ class TestViewSetBase(APITestCase):
         batch = [self.create(data) for data in batch_attributes]
         return batch
 
-    def retrieve(self, id: int = None) -> dict:
-        response = self.request_retrieve(id)
+    def retrieve(self, args: List[Union[str, int]] = None) -> dict:
+        response = self.request_retrieve(args=args)
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
-    def list(self) -> dict:
-        response = self.request_list()
+    def list(self, args: List[Union[str, int]] = None) -> dict:
+        response = self.request_list(args)
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
