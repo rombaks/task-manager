@@ -19,3 +19,11 @@ class TestUserTasksViewSet(TestViewSetBase):
 
         assert tasks == [user_task]
 
+    def test_retrieve_foreign_task(self) -> None:
+        user = self.action_client.create_user()
+        task = self.action_client.create_task()
+
+        response = self.request_retrieve(args=[user["id"], task["id"]])
+
+        assert response.status_code == HTTPStatus.NOT_FOUND
+
