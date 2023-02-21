@@ -25,7 +25,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from .main.views import UserViewSet, TaskViewSet, TagViewSet, CurrentUserViewSet
+    UserTasksViewSet,
+)
 from .main.services.single_resource import BulkRouter
 
 
@@ -34,6 +35,14 @@ router.register(r"users", UserViewSet, basename="users")
 router.register(r"tasks", TaskViewSet, basename="tasks")
 router.register(r"tags", TagViewSet, basename="tags")
 router.register(r"current-user", CurrentUserViewSet, basename="current_user")
+
+users = router.register(r"users", UserViewSet, basename="users")
+users.register(
+    r"tasks",
+    UserTasksViewSet,
+    basename="user_tasks",
+    parents_query_lookups=["assignee_id"],
+)
 
 schema_view = get_schema_view(
     openapi.Info(
