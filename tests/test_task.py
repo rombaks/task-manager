@@ -21,7 +21,7 @@ class TestTaskViewSet(TestViewSetBase):
             "id": entity["id"],
             "author": None,
             "assignee": None,
-            "tag": [],
+            "tags": [],
         }
 
     def expected_list(self, entity_list: list[dict], attributes_list: list[dict]):
