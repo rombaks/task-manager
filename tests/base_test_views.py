@@ -21,14 +21,10 @@ class TestViewSetBase(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         super().setUpTestData()
-        cls.user = cls.create_api_user()
         cls.client = APIClient()
         cls.action_client = ActionClient(cls.client)
-
-    @staticmethod
-    def create_api_user():
-        user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
-        return User.objects.create(**user_attributes)
+        cls.action_client.init_user()
+        cls.user = cls.action_client.user
 
     @classmethod
     def detail_url(cls, args: List[Union[str, int]] = None) -> str:
