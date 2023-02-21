@@ -27,3 +27,10 @@ class TestUserTasksViewSet(TestViewSetBase):
 
         assert response.status_code == HTTPStatus.NOT_FOUND
 
+    def test_retrieve(self) -> None:
+        user = self.action_client.create_user()
+        user_task = self.action_client.create_task(assignee=user["id"])
+
+        retrieved_task = self.retrieve(args=[user["id"], user_task["id"]])
+
+        assert user_task == retrieved_task
