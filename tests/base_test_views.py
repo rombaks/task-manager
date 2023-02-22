@@ -112,3 +112,6 @@ class TestViewSetBase(APITestCase):
         response = self.request_patch_single_resource(attributes)
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
+
+    def ids(self, entities: List[dict] = None) -> List[Optional[int]]:
+        return [entity.get("id") for entity in entities]
