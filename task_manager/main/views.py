@@ -40,6 +40,14 @@ class TaskViewSet(viewsets.ModelViewSet):
     filterset_class = TaskFilter
 
 
+class TaskTagsViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = TagSerializer
+
+    def get_queryset(self):
+        task_id = self.kwargs["parent_lookup_task_id"]
+        return Task.objects.get(pk=task_id).tags.all()
+
+
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.order_by("id")
     serializer_class = TagSerializer
