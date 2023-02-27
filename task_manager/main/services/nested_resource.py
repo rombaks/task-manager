@@ -61,3 +61,9 @@ class TaskTagsViewMixin(BaseViewMixinBaseClass):
             data = serializer.data
 
         return tag, data
+
+    def _get_task(self) -> Task:
+        task_id = self.kwargs["parent_lookup_task_id"]
+        task = Task.objects.get(pk=task_id)
+
+        return task
