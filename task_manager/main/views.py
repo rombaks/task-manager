@@ -1,6 +1,7 @@
 from typing import cast
 from rest_framework import viewsets
 from .services.single_resource import SingleResourceMixin, SingleResourceUpdateMixin
+from .services.nested_resource import TaskTagsViewMixin
 
 
 from .models import User, Task, Tag
@@ -40,7 +41,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     filterset_class = TaskFilter
 
 
-class TaskTagsViewSet(viewsets.ReadOnlyModelViewSet):
+class TaskTagsViewSet(TaskTagsViewMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = TagSerializer
 
     def get_queryset(self):
