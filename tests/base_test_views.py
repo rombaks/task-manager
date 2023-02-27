@@ -1,5 +1,3 @@
-import factory
-
 from http import HTTPStatus
 from typing import List, Optional, Union
 
@@ -8,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.test import APIClient, APITestCase
 
 from task_manager.main.models import User
-from tests.fixtures.factories import UserFactory
 from tests.fixtures.action_client import ActionClient
 
 
@@ -54,14 +51,14 @@ class TestViewSetBase(APITestCase):
         response = self.client.get(self.list_url(args))
         return response
 
-    def request_update(self, data: dict, id: int = None) -> dict:
+    def request_update(self, data: dict, args: List[Union[str, int]] = None) -> dict:
         self.client.force_login(self.user)
-        response = self.client.patch(self.detail_url(id), data=data)
+        response = self.client.patch(self.detail_url(args), data=data)
         return response
 
-    def request_delete(self, id: int = None) -> dict:
+    def request_delete(self, args: List[Union[str, int]]) -> dict:
         self.client.force_login(self.user)
-        response = self.client.delete(self.detail_url(id))
+        response = self.client.delete(self.detail_url(args))
         return response
 
     def create_batch(self, batch_attributes: list[dict]) -> list[dict]:
@@ -78,13 +75,13 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
-    def update(self, data: dict, id: int = None) -> dict:
-        response = self.request_update(data, id)
+    def update(self, data: dict, args: List[Union[str, int]]) -> dict:
+        response = self.request_update(data, args)
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
-    def delete(self, id: int = None) -> dict:
-        response = self.request_delete(id)
+    def delete(self, args: List[Union[str, int]]) -> dict:
+        response = self.request_delete(args)
         assert response.status_code == HTTPStatus.NO_CONTENT
         return response
 
@@ -103,13 +100,25 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.OK
         return response.data
 
-    def request_patch_single_resource(self, attributes: dict) -> Response:
+    def request_patch_single_resource(self, data: dict) -> Response:
         self.client.force_login(self.user)
         url = self.list_url()
-        return self.client.patch(url, data=attributes)
+        return self.client.patch(url, data=data)
 
-    def patch_single_resource(self, attributes: dict) -> dict:
-        response = self.request_patch_single_resource(attributes)
+    def patch_single_resource(self, data: dict) -> dict:
+        response = self.request_patch_single_resource(data)
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.data
+
+    def request_bulk_update(
+        self, data: dict, args: List[Union[str, int]] = None
+    ) -> Response:
+        self.client.force_login(self.user)
+        url = self.list_url(args)
+        return self.client.put(url, data=data)
+
+    def bulk_update(self, data: dict, args: List[Union[str, int]] = None) -> dict:
+        response = self.request_bulk_update(data, args)
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
