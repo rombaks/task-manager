@@ -21,3 +21,12 @@ class TaskTagsViewMixin(BaseViewMixinBaseClass):
     bulk_update: Replace task current tags by new one
     delete: Delete tag by id from task tag list
     """
+
+    def create(self, request: Request, *_: Any, **___: Any) -> Response:
+        """Get or create new tag and add it to task tag list"""
+        task = self._get_task()
+        tag, data = self._get_or_create_valid_tag(request=request)
+
+        task.tags.add(tag)
+
+        return Response(data=data, status=HTTPStatus.CREATED)
