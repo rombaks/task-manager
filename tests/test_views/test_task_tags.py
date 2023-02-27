@@ -42,6 +42,17 @@ class TestTaskTagsViewSet(TestViewSetBase):
 
         expected_response = self.expected_details(tag, self.tag_attributes)
         assert tag == expected_response
+
+    def test_update(self):
+        task = self.action_client.create_task()
+        tag1 = self.action_client.create_tag()
+        tag2 = self.action_client.create_tag()
+        self.add_tags(task, [tag1, tag2])
+
+        tag = self.bulk_update(data=self.tag_attributes, args=[task["id"]])
+
+        expected_response = self.expected_details(tag, self.tag_attributes)
+        assert tag == expected_response
     def add_tags(self, task: dict, tags: list) -> None:
         task_instance = Task.objects.get(pk=task["id"])
         task_instance.tags.add(*self.ids(tags))
