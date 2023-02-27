@@ -50,3 +50,14 @@ class TaskTagsViewMixin(BaseViewMixinBaseClass):
 
         return Response(status=HTTPStatus.NO_CONTENT)
 
+    def _get_or_create_valid_tag(self, request: Request) -> tuple[Tag, dict]:
+        try:
+            tag = Tag.objects.get(**request.data)
+            data = model_to_dict(tag)
+        except Tag.DoesNotExist:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            tag = serializer.save()
+            data = serializer.data
+
+        return tag, data
