@@ -40,3 +40,13 @@ class TaskTagsViewMixin(BaseViewMixinBaseClass):
         task.tags.add(tag)
 
         return Response(data=data, status=HTTPStatus.OK)
+
+    def destroy(self, _: Request, *__: Any, **___: Any) -> Response:
+        """Delete tag by id from task tag list"""
+        tag = self.get_object()
+        task = self._get_task()
+
+        task.tags.remove(tag)
+
+        return Response(status=HTTPStatus.NO_CONTENT)
+
