@@ -15,6 +15,14 @@ class TestTaskTagsViewSet(TestViewSetBase):
 
         assert tags == [tag1, tag2]
 
+    def test_retrieve(self) -> None:
+        task = self.action_client.create_task()
+        expected_tag = self.action_client.create_tag()
+        self.add_tags(task, [expected_tag])
+
+        tag = self.retrieve(args=[task["id"], expected_tag["id"]])
+
+        assert tag == expected_tag
     def add_tags(self, task: dict, tags: list) -> None:
         task_instance = Task.objects.get(pk=task["id"])
         task_instance.tags.add(*self.ids(tags))
