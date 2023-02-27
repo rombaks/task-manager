@@ -30,3 +30,13 @@ class TaskTagsViewMixin(BaseViewMixinBaseClass):
         task.tags.add(tag)
 
         return Response(data=data, status=HTTPStatus.CREATED)
+
+    def bulk_update(self, request: Request, *__: Any, **___: Any) -> Response:
+        """Replace task current tags by new one"""
+        tag, data = self._get_or_create_valid_tag(request=request)
+        task = self._get_task()
+
+        task.tags.clear()
+        task.tags.add(tag)
+
+        return Response(data=data, status=HTTPStatus.OK)
