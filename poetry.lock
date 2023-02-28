@@ -467,6 +467,21 @@ python-versions = ">=3.7"
 python-dateutil = ">=2.4"
 
 [[package]]
+name = "flower"
+version = "1.2.0"
+description = "Celery Flower"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+celery = ">=5.0.5"
+humanize = "*"
+prometheus-client = ">=0.8.0"
+pytz = "*"
+tornado = ">=5.0.0,<7.0.0"
+
+[[package]]
 name = "freezegun"
 version = "1.2.2"
 description = "Let your Python tests travel through time"
@@ -490,6 +505,17 @@ eventlet = ["eventlet (>=0.24.1)"]
 gevent = ["gevent (>=1.4.0)"]
 setproctitle = ["setproctitle"]
 tornado = ["tornado (>=0.2)"]
+
+[[package]]
+name = "humanize"
+version = "4.6.0"
+description = "Python humanize utilities"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+tests = ["freezegun", "pytest", "pytest-cov"]
 
 [[package]]
 name = "idna"
@@ -684,6 +710,17 @@ python-versions = ">=3.6"
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
+
+[[package]]
+name = "prometheus-client"
+version = "0.16.0"
+description = "Python client for the Prometheus monitoring system."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+twisted = ["twisted"]
 
 [[package]]
 name = "prompt-toolkit"
@@ -898,6 +935,14 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "tornado"
+version = "6.2"
+description = "Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed."
+category = "main"
+optional = false
+python-versions = ">= 3.7"
+
+[[package]]
 name = "typing-extensions"
 version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -976,7 +1021,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "3a8a8dcc7e999b4387b94658871a96470918c3c33fcfa5d2c68ac89166a752c6"
+content-hash = "d3ab17f27e99e2c880014911a051a0ff216cf52eeed4ab98be31c2e3556c724d"
 
 [metadata.files]
 amqp = []
@@ -1012,8 +1057,10 @@ drf-yasg = []
 exceptiongroup = []
 factory-boy = []
 faker = []
+flower = []
 freezegun = []
 gunicorn = []
+humanize = []
 idna = []
 importlib-metadata = []
 inflection = []
@@ -1031,6 +1078,7 @@ pathspec = []
 pillow = []
 platformdirs = []
 pluggy = []
+prometheus-client = []
 prompt-toolkit = []
 psycopg2-binary = []
 pyjwt = []
@@ -1049,6 +1097,7 @@ s3transfer = []
 six = []
 sqlparse = []
 tomli = []
+tornado = []
 typing-extensions = []
 tzdata = []
 uritemplate = []

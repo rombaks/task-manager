@@ -28,6 +28,7 @@ Pillow = "^9.3.0"
 drf-extensions = "^0.7.1"
 celery = "^5.2.7"
 redis = "^4.5.1"
+flower = "^1.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest-django = "^4.5.2"
