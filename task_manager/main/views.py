@@ -1,13 +1,19 @@
 from typing import cast
-from rest_framework import viewsets
-from .services.single_resource import SingleResourceMixin, SingleResourceUpdateMixin
-from .services.nested_resource import TaskTagsViewMixin
 
-
-from .models import User, Task, Tag
-from .serializers import UserSerializer, TaskSerializer, TagSerializer
-from .filters import UserFilter, TaskFilter
+from django.urls import reverse
+from rest_framework import mixins, viewsets
 from rest_framework_extensions.mixins import NestedViewSetMixin
+
+from .filters import TaskFilter, UserFilter
+from .models import Tag, Task, User
+from .serializers import (
+    TagSerializer,
+    TaskSerializer,
+    UserSerializer,
+    CountdownJobSerializer,
+)
+from .services.nested_resource import TaskTagsViewMixin
+from .services.single_resource import SingleResourceMixin, SingleResourceUpdateMixin
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -52,3 +58,11 @@ class TaskTagsViewSet(TaskTagsViewMixin, viewsets.ReadOnlyModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.order_by("id")
     serializer_class = TagSerializer
+
+
+class CountdownJobViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    serializer_class = CountdownJobSerializer
+
+    def get_success_headers(self, data: dict) -> dict[str, str]:
+        task_id = data["task_id"]
+        return {"Location": reverse("jobs-detail", args=[task_id])}
