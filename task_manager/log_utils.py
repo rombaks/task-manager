@@ -1,3 +1,4 @@
+import time
 import logging
 from threading import local
 from typing import Any, Callable
@@ -14,7 +15,13 @@ class LoggingMiddleware:
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
         _thread_locals.request = request
+
+        start_time = time.time()
+
         response = self.get_response(request)
+
+        _thread_locals.execution_time = time.time() - start_time
+
         return response
 
     def process_view(self, request: HttpRequest, view_func: Callable, *_: Any) -> None:
@@ -27,6 +34,7 @@ class RequestFormatter(logging.Formatter):
         record.request = request  # type: ignore
         record.remote_addr = self.get_remote_ip(request)  # type: ignore
         record.view = getattr(_thread_locals, "view", PlaceHolder())  # type: ignore
+        record.execution_time = getattr(_thread_locals, "execution_time", PlaceHolder())  # type: ignore
         record.user_id = request.user.id if request.user.is_authenticated else "-"  # type: ignore
         return super().format(record)
 
