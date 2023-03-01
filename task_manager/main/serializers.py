@@ -95,3 +95,9 @@ class ErrorSerializer(RepresentationSerializer):
         child=serializers.CharField()
     )
 
+
+class JobSerializer(RepresentationSerializer):
+    task_id = serializers.CharField(read_only=True)
+    status = serializers.CharField(read_only=True)
+    errors = ErrorSerializer(read_only=True, required=False)
+    result = serializers.CharField(required=False)
