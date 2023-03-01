@@ -23,11 +23,19 @@ class LoggingMiddleware:
 
 class RequestFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
-        request = _thread_locals.request
-        record.request = request
-        record.view = _thread_locals.view
-        record.user_id = request.user.id if request.user.is_authenticated else "-"
+        request = getattr(_thread_locals, "request", PlaceHolder())
+        record.request = request  # type: ignore
+        record.remote_addr = self.get_remote_ip(request)  # type: ignore
+        record.view = getattr(_thread_locals, "view", PlaceHolder())  # type: ignore
+        record.user_id = request.user.id if request.user.is_authenticated else "-"  # type: ignore
         return super().format(record)
+
+    @staticmethod
+    def get_remote_ip(request: HttpRequest) -> str:
+        forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+        if forwarded_for:
+            return forwarded_for.split(",", 1)[0]
+        return request.META.get("REMOTE_ADDR", PlaceHolder())
 
 
 class PlaceHolder:
