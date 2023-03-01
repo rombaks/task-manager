@@ -33,3 +33,13 @@ class TestCountdownJob(TestViewSetBase):
         assert file.is_file()
         assert file.read_bytes() == b"test data"
         file.unlink(missing_ok=True)
+
+    @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
+    def test_countdown(self):
+        response = self.request_create({"seconds": 1})
+        task_id = response.data["task_id"]
+        file_name = f"media/test_report-{task_id}.data"
+        file = pathlib.Path(file_name)
+        assert file.is_file()
+        assert file.read_bytes() == b"test data"
+        file.unlink(missing_ok=True)
