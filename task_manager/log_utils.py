@@ -29,3 +29,22 @@ class RequestFormatter(logging.Formatter):
         record.user_id = request.user.id if request.user.is_authenticated else "-"
         return super().format(record)
 
+
+class PlaceHolder:
+    def __init__(self, to_str: str = "-") -> None:
+        self._to_str = to_str
+
+    def __getattr__(self, name: str) -> "PlaceHolder":
+        return self
+
+    def __call__(self, *args: Any, **kwargs: Any) -> "PlaceHolder":
+        return self
+
+    def __str__(self) -> str:
+        return self._to_str
+
+    def __repr__(self) -> str:
+        return self._to_str
+
+    def __bool__(self) -> bool:
+        return False
