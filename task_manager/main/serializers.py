@@ -66,3 +66,12 @@ class TaskSerializer(serializers.ModelSerializer):
             "priority",
             "tags",
         )
+
+
+class RepresentationSerializer(serializers.Serializer):
+    def update(self, instance: Any, validated_data: dict) -> Any:
+        pass
+
+    def create(self, validated_data: dict) -> Any:
+        pass
+
