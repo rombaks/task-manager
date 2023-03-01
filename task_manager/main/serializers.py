@@ -1,10 +1,14 @@
-from rest_framework import serializers
+from typing import Any
+
+from celery.result import AsyncResult
+from django.core.exceptions import ValidationError
 from django.core.files.base import File
 from django.core.validators import FileExtensionValidator
-from django.core.exceptions import ValidationError
-
-from .models import tag, user, task
+from rest_framework import serializers
 from task_manager.settings import UPLOAD_MAX_SIZES
+from task_manager.tasks import countdown
+
+from .models import tag, task, user
 
 
 class FileMaxSizeValidator:
@@ -75,3 +79,12 @@ class RepresentationSerializer(serializers.Serializer):
     def create(self, validated_data: dict) -> Any:
         pass
 
+
+class CountdownJobSerializer(RepresentationSerializer):
+    seconds = serializers.IntegerField(write_only=True)
+
+    task_id = serializers.CharField(read_only=True)
+    status = serializers.CharField(read_only=True)
+
+    def create(self, validated_data: dict) -> AsyncResult:
+        return countdown.delay(**validated_data)
