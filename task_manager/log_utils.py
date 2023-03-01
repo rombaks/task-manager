@@ -21,3 +21,11 @@ class LoggingMiddleware:
         _thread_locals.view = view_func
 
 
+class RequestFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        request = _thread_locals.request
+        record.request = request
+        record.view = _thread_locals.view
+        record.user_id = request.user.id if request.user.is_authenticated else "-"
+        return super().format(record)
+
