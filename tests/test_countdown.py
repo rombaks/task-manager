@@ -14,6 +14,7 @@ class TestCountdownJob(TestViewSetBase):
     COUNTDOWN_TIME = 5
     DELAY = 2
 
+    @pytest.mark.slow
     def test_countdown_machinery(self):
         response = self.request_create({"seconds": self.COUNTDOWN_TIME})
         assert response.status_code == status.HTTP_201_CREATED
