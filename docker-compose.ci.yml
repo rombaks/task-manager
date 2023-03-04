@@ -11,6 +11,8 @@ x-app-config: &app-config
   EMAIL_HOST_USER: ${EMAIL_HOST_USER}
   EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
   EMAIL_PORT: ${EMAIL_PORT}
+  REDIS_HOST: ${REDIS_HOST}
+  REDIS_PORT: ${REDIS_PORT}
 
 x-db-config: &db-config
   DATABASE_NAME: postgres
@@ -19,6 +21,7 @@ x-db-config: &db-config
   DATABASE_HOST: db
   DATABASE_PORT: 5432
   POSTGRES_PASSWORD: postgres
+
 
 services:
   api:
@@ -30,6 +33,8 @@ services:
       <<: *db-config
     depends_on:
       - db
+      - celery
+      - redis
     ports:
       - "8000:8000"
     stdin_open: true
@@ -42,6 +47,23 @@ services:
       driver: none
     ports:
       - "5432:5432"
+
+  redis:
+    image: redis:6-alpine
+    environment:
+      <<: *app-config
+    ports:
+    - "6379:6379"
+
+  celery:
+    build: .
+    command: celery --app=task_manager worker --loglevel=info
+    environment:
+      <<: *app-config
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
 
 volumes:
   sqlvolume:
