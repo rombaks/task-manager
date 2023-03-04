@@ -11,6 +11,8 @@ services:
       - 8000:8000
     depends_on:
       - db
+      - celery
+      - redis
     env_file:
       - ./.env
     environment: &api-environment
@@ -21,7 +23,10 @@ services:
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
       DATABASE_HOST: db
-      DATABASE_PORT: 5432      
+      DATABASE_PORT: 5432
+
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     command: python manage.py runserver 0.0.0.0:8000
 
   db:
@@ -31,3 +36,31 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+
+  redis:
+    image: redis:6-alpine
+    ports:
+    - "6379:6379"
+
+  celery:
+    build: .
+    command: celery --app=task_manager worker --loglevel=info
+    environment:
+      <<: *api-environment
+    volumes: 
+      - .:/app
+    depends_on:
+      - redis
+
+  flower:
+      build: .
+      command: celery --app=task_manager --broker=redis://redis:6379/0 flower --port=5555
+      environment:
+        <<: *api-environment
+      volumes: 
+        - .:/app
+      ports:
+        - "5555:5555"
+      depends_on:
+        - redis
+
