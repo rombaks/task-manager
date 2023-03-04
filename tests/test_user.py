@@ -23,7 +23,7 @@ class TestUserViewSet(TestViewSetBase):
         }
 
     def expected_list(self, entity_list: list[dict], attributes_list: list[dict]):
-        authtorized_user = self.retrieve(self.user.id)
+        authtorized_user = self.retrieve([self.user.id])
         expected_list = [authtorized_user]
 
         for index, entity in enumerate(entity_list):
@@ -41,7 +41,7 @@ class TestUserViewSet(TestViewSetBase):
         user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
         user = self.create(user_attributes)
         expected_response = self.expected_details(user, user_attributes)
-        retrieved_user = self.retrieve(user["id"])
+        retrieved_user = self.retrieve([user["id"]])
         assert retrieved_user == expected_response
 
     def test_list(self):
@@ -57,13 +57,13 @@ class TestUserViewSet(TestViewSetBase):
         updated_attributes = dict(user_attributes, **new_data)
         expected_response = self.expected_details(user, updated_attributes)
         expected_response["avatar_picture"] = user["avatar_picture"]
-        response = self.update(new_data, user["id"])
+        response = self.update(new_data, [user["id"]])
         assert response == expected_response
 
     def test_delete(self):
         user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
         user = self.create(user_attributes)
-        response = self.delete(user["id"])
+        response = self.delete([user["id"]])
         assert response.status_code == HTTPStatus.NO_CONTENT
 
     def test_not_found(self):

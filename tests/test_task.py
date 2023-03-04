@@ -21,7 +21,7 @@ class TestTaskViewSet(TestViewSetBase):
             "id": entity["id"],
             "author": None,
             "assignee": None,
-            "tag": [],
+            "tags": [],
         }
 
     def expected_list(self, entity_list: list[dict], attributes_list: list[dict]):
@@ -39,7 +39,7 @@ class TestTaskViewSet(TestViewSetBase):
     def test_retrieve(self):
         task = self.create(self.task_attributes)
         expected_response = self.expected_details(task, self.task_attributes)
-        retrieved_task = self.retrieve(task["id"])
+        retrieved_task = self.retrieve([task["id"]])
         assert retrieved_task == expected_response
 
     def test_list(self):
@@ -53,10 +53,10 @@ class TestTaskViewSet(TestViewSetBase):
         new_data = {"title": "Build API 0.1.3"}
         updated_attributes = dict(self.task_attributes, **new_data)
         expected_response = self.expected_details(task, updated_attributes)
-        response = self.update(new_data, task["id"])
+        response = self.update(new_data, [task["id"]])
         assert response == expected_response
 
     def test_delete(self):
         task = self.create(self.task_attributes)
-        response = self.delete(task["id"])
+        response = self.delete([task["id"]])
         assert response.status_code == HTTPStatus.NO_CONTENT

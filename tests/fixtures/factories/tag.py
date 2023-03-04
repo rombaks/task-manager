@@ -1,6 +1,6 @@
 import factory
 
-from base import faker
+from tests.base import faker
 from task_manager.main.models import Tag
 
 

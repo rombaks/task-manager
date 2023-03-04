@@ -1,6 +1,6 @@
 import factory
 
-from base import faker, ImageFileProvider
+from tests.base import faker, ImageFileProvider
 from task_manager.main.models import User
 
 factory.Faker.add_provider(ImageFileProvider)

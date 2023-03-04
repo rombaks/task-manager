@@ -23,8 +23,8 @@ class Task(models.Model):
     assignee = models.ForeignKey(
         User, on_delete=models.PROTECT, null=True, related_name="Task_assignee"
     )
-    tag = models.ManyToManyField(
-        Tag, related_name="Tag", verbose_name="Tag", null=True, blank=True
+    tags = models.ManyToManyField(
+        Tag, related_name="Tag", verbose_name="Tag", blank=True
     )
 
     class State(models.TextChoices):

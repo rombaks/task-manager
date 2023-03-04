@@ -1,39 +1,46 @@
-"""task_manager URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic import TemplateView
 
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from rest_framework import permissions, routers
+from rest_framework import permissions
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
 
-from .main.views import UserViewSet, TaskViewSet, TagViewSet, CurrentUserViewSet
+from .main.views import (
+    TaskTagsViewSet,
+    UserViewSet,
+    TaskViewSet,
+    TagViewSet,
+    CurrentUserViewSet,
+    UserTasksViewSet,
+)
 from .main.services.single_resource import BulkRouter
 
 
 router = BulkRouter()
-router.register(r"users", UserViewSet, basename="users")
 router.register(r"tasks", TaskViewSet, basename="tasks")
 router.register(r"tags", TagViewSet, basename="tags")
 router.register(r"current-user", CurrentUserViewSet, basename="current_user")
+
+users = router.register(r"users", UserViewSet, basename="users")
+users.register(
+    r"tasks",
+    UserTasksViewSet,
+    basename="user_tasks",
+    parents_query_lookups=["assignee_id"],
+)
+
+tasks = router.register(r"tasks", TaskViewSet, basename="tasks")
+tasks.register(
+    r"tags",
+    TaskTagsViewSet,
+    basename="task_tags",
+    parents_query_lookups=["task_id"],
+)
 
 schema_view = get_schema_view(
     openapi.Info(

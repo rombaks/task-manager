@@ -49,9 +49,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    tag = TagSerializer(many=True, required=False, read_only=True)
     author = UserSerializer(read_only=True)
-    assignee = UserSerializer(read_only=True)
 
     class Meta:
         model = task.Task
@@ -66,5 +64,5 @@ class TaskSerializer(serializers.ModelSerializer):
             "updated_at",
             "state",
             "priority",
-            "tag",
+            "tags",
         )
