@@ -10,6 +10,7 @@ Project helps you to get things done! It provides:
 - user roles with different permissions (Developer, Manager and Admin);
 - task with a variety of states (from new to achieved);
 - email notification;
+- background user reports generation;
 - admin panel for management.
 
 ### Usage
@@ -21,6 +22,29 @@ git clone git@github.com:rombaks/task-manager.git
 ```
 
 -   Add your credentials to `.env` file for a local development
+```
+DJANGO_SECRET_KEY=your_secret
+
+DATABASE_NAME=your_secret
+DATABASE_USER=your_secret
+DATABASE_PASSWORD=your_secret
+DATABASE_HOST=your_secret
+DATABASE_PORT=your_secret
+
+REDIS_HOST=your_secret
+REDIS_PORT=your_secret
+
+POST_SERVER_ITEM_ACCESS_TOKEN=your_secret
+
+EMAIL_USE_SSL=0
+EMAIL_USE_TLS=1
+EMAIL_HOST=your_secret
+EMAIL_HOST_USER=your_secret
+EMAIL_HOST_PASSWORD=your_secret
+EMAIL_PORT=your_secret
+
+DEBUG=False
+```
 
 -   Build docker-compose from project root directory
 
@@ -65,7 +89,9 @@ docker-compose up
 
 - API: Django REST framework. Docs http://localhost:8000/swagger/
 - Admin panel: Django admin  http://localhost:8000/admin/
-- DateBase: PostrgeSQL 
+- DateBase: PostrgeSQL
+- Asyncronous Request-Reply: Celery + Redis
+- Tasks monitoring: Flower
 - Dependency manager: Poetry
 - Code formatter: Black
 - Tests: PyTest + Factory Boy + Coveralls
